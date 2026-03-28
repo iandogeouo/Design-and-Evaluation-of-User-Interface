@@ -461,14 +461,16 @@ function openModal(key) {
     </div>
   `).join('');
 
-  overlay.hidden = false;
+  overlay.classList.add('is-open');
+  overlay.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
   // reset scroll
   modalBox.scrollTop = 0;
 }
 
 function closeModal() {
-  overlay.hidden = true;
+  overlay.classList.remove('is-open');
+  overlay.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
 }
 
