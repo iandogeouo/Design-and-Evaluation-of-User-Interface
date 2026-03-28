@@ -961,20 +961,6 @@ footer p { font-size: .88rem; color: var(--muted); }
   line-height: 1.65;
   margin: 0;
 }
-.modal-point-body { flex: 1; min-width: 0; }
-.modal-point-img {
-  display: block;
-  width: 100%;
-  max-height: 220px;
-  object-fit: cover;
-  object-position: top;
-  border-radius: 8px;
-  margin-top: 10px;
-  border: 1px solid var(--border);
-  opacity: .9;
-  transition: opacity var(--t);
-}
-.modal-point-img:hover { opacity: 1; }
 
 /* scrollbar for modal */
 .modal-box::-webkit-scrollbar { width: 5px; }
