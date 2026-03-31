@@ -1123,6 +1123,146 @@ footer p { font-size: .88rem; color: var(--muted); }
 }
 
 /* ═══════════════════════════════════════════
+   淺色主題
+═══════════════════════════════════════════ */
+html.light {
+  --bg:        #f0f0f8;
+  --bg2:       #ffffff;
+  --bg-card:   rgba(0,0,0,0.04);
+  --bg-hover:  rgba(0,0,0,0.07);
+  --border:    rgba(0,0,0,0.1);
+  --border-hi: rgba(0,0,0,0.22);
+  --text:      #1a1a30;
+  --muted:     #55557a;
+  --subtle:    #9999b0;
+}
+html.light body { background: var(--bg); color: var(--text); }
+html.light #navbar { background: rgba(240,240,248,0.92); border-bottom-color: rgba(0,0,0,0.1); }
+html.light .nav-links a { color: var(--muted); }
+html.light #hero { background: linear-gradient(160deg, #e8e8f8 0%, #f4f0ff 100%); }
+html.light .hero-shapes .shape { opacity: 0.12; }
+html.light .hero-title {
+  background: linear-gradient(135deg, #1a1a30 20%, var(--c1) 60%, var(--c2));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+html.light .hero-eyebrow, html.light .hero-sub { color: #55557a; }
+html.light .score-table thead th { background: var(--bg2); }
+html.light .score-table tbody tr:hover td { background: rgba(0,0,0,0.03); }
+html.light .modal-box { background: var(--bg2); }
+html.light .modal-overlay { background: rgba(0,0,0,0.5); }
+html.light #chatPanel { background: var(--bg2); }
+html.light .msg-ai .msg-bubble { background: rgba(0,0,0,0.06); }
+html.light #gameFilter { background: var(--bg2); }
+@media (max-width: 760px) {
+  html.light .nav-links { background: rgba(240,240,248,0.97); border-bottom-color: rgba(0,0,0,0.1); }
+}
+
+/* ═══════════════════════════════════════════
+   主題切換按鈕
+═══════════════════════════════════════════ */
+#themeToggle {
+  font-size: 1.05rem;
+  padding: 5px 9px;
+  border-radius: var(--r-sm);
+  color: var(--muted);
+  margin-right: 6px;
+  transition: color var(--t), background var(--t);
+  flex-shrink: 0;
+}
+#themeToggle:hover { color: var(--text); background: var(--bg-hover); }
+
+/* ═══════════════════════════════════════════
+   比較表控制列
+═══════════════════════════════════════════ */
+.table-controls {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 12px; flex-wrap: wrap;
+}
+.table-controls label { font-size: .83rem; color: var(--muted); }
+#gameFilter {
+  background: var(--bg-card);
+  border: 1px solid var(--border-hi);
+  color: var(--text);
+  border-radius: var(--r-sm);
+  padding: 5px 10px;
+  font-family: inherit; font-size: .83rem; cursor: pointer;
+  transition: border-color var(--t);
+}
+#gameFilter:focus { outline: none; border-color: var(--c3); }
+#undoFilter {
+  font-size: .8rem; padding: 5px 12px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border-hi);
+  color: var(--muted); background: var(--bg-card);
+  transition: color var(--t), background var(--t);
+}
+#undoFilter:not(:disabled):hover { color: var(--text); background: var(--bg-hover); }
+#undoFilter:disabled { opacity: 0.3; cursor: not-allowed; }
+.score-table thead th {
+  position: sticky;
+  top: var(--nav-h);
+  z-index: 5;
+  box-shadow: 0 1px 0 var(--border);
+  background: var(--bg);
+}
+.score-table td.hidden-col, .score-table th.hidden-col { display: none; }
+
+/* ═══════════════════════════════════════════
+   Toast 通知
+═══════════════════════════════════════════ */
+#toastContainer {
+  position: fixed; bottom: 36px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 9998; display: flex; flex-direction: column;
+  gap: 8px; align-items: center; pointer-events: none;
+}
+.toast {
+  background: rgba(0,212,200,0.15);
+  border: 1px solid var(--c3);
+  color: var(--text);
+  padding: 11px 28px; border-radius: 50px;
+  font-size: .88rem; font-weight: 600;
+  backdrop-filter: blur(12px);
+  white-space: nowrap;
+  animation: toastIn .3s var(--ease) forwards;
+}
+.toast.out { animation: toastOut .35s var(--ease) forwards; }
+@keyframes toastIn  { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+@keyframes toastOut { from { opacity:1; transform:none; } to { opacity:0; transform:translateY(-8px); } }
+
+/* ═══════════════════════════════════════════
+   快捷功能指南
+═══════════════════════════════════════════ */
+.shortcut-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+}
+.shortcut-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 18px 20px;
+  display: flex; align-items: flex-start; gap: 14px;
+  transition: border-color var(--t);
+}
+.shortcut-card:hover { border-color: var(--border-hi); }
+.shortcut-key {
+  flex-shrink: 0;
+  background: var(--bg-hover);
+  border: 1px solid var(--border-hi);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: .78rem; font-weight: 700;
+  font-family: 'Space Grotesk', monospace;
+  color: var(--c3); white-space: nowrap;
+  letter-spacing: .03em;
+}
+.shortcut-desc h4 { font-size: .88rem; font-weight: 700; margin-bottom: 4px; }
+.shortcut-desc p  { font-size: .8rem; color: var(--muted); line-height: 1.55; }
+
+/* ═══════════════════════════════════════════
    RWD
 ═══════════════════════════════════════════ */
 @media (max-width: 900px) {

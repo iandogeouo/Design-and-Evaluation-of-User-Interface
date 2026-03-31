@@ -127,11 +127,15 @@ const nameErr    = document.getElementById('fnameErr');
 const emailErr   = document.getElementById('femailErr');
 const formOk     = document.getElementById('formOk');
 
+// 從 localStorage 讀回上次填過的姓名
+const savedName = localStorage.getItem('contactName');
+if (savedName) nameInput.value = savedName;
+
 function validateEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
 
 function showErr(input, errEl, msg) {
   input.classList.add('err');
-  errEl.textContent = msg;
+  errEl.textContent = '⚠ ' + msg;
 }
 function clearErr(input, errEl) {
   input.classList.remove('err');
@@ -169,9 +173,10 @@ form.addEventListener('submit', (e) => {
   }
 
   if (valid) {
-    formOk.hidden = false;
+    localStorage.setItem('contactName', nameInput.value.trim());
+    showToast('✅ 送出成功！感謝您的意見回饋。');
     form.reset();
-    setTimeout(() => { formOk.hidden = true; }, 5000);
+    nameInput.value = localStorage.getItem('contactName') || '';
   }
 });
 
@@ -488,6 +493,84 @@ document.querySelectorAll('.h-card').forEach((card, i) => {
 document.querySelectorAll('.rule-card').forEach((card, i) => {
   const key = `r${i + 1}`;
   card.addEventListener('click', () => openModal(key));
+});
+
+// ── 主題切換 ─────────────────────────────────
+const themeToggle = document.getElementById('themeToggle');
+(function initTheme() {
+  if (localStorage.getItem('theme') === 'light') {
+    document.documentElement.classList.add('light');
+    themeToggle.textContent = '☀️';
+  }
+})();
+
+function toggleTheme() {
+  const isLight = document.documentElement.classList.toggle('light');
+  themeToggle.textContent = isLight ? '☀️' : '🌙';
+  localStorage.setItem('theme', isLight ? 'light' : 'dark');
+}
+themeToggle.addEventListener('click', toggleTheme);
+
+// ── Toast 通知 ────────────────────────────────
+function showToast(msg, duration = 3500) {
+  const container = document.getElementById('toastContainer');
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.textContent = msg;
+  container.appendChild(el);
+  setTimeout(() => {
+    el.classList.add('out');
+    setTimeout(() => el.remove(), 380);
+  }, duration);
+}
+
+// ── 比較表篩選 + 退回 ─────────────────────────
+const gameFilter  = document.getElementById('gameFilter');
+const undoFilterBtn = document.getElementById('undoFilter');
+const filterHistory = ['both'];
+
+document.querySelectorAll('.score-table tbody tr').forEach(row => {
+  row.cells[1].classList.add('col-1');
+  row.cells[2].classList.add('col-2');
+});
+
+function applyFilter(val) {
+  const isHideG1 = val === 'g2';
+  const isHideG2 = val === 'g1';
+  document.querySelector('.score-table .th-1').classList.toggle('hidden-col', isHideG1);
+  document.querySelector('.score-table .th-2').classList.toggle('hidden-col', isHideG2);
+  document.querySelectorAll('.score-table .col-1').forEach(el => el.classList.toggle('hidden-col', isHideG1));
+  document.querySelectorAll('.score-table .col-2').forEach(el => el.classList.toggle('hidden-col', isHideG2));
+}
+
+gameFilter.addEventListener('change', () => {
+  filterHistory.push(gameFilter.value);
+  undoFilterBtn.disabled = false;
+  applyFilter(gameFilter.value);
+});
+
+function undoTableFilter() {
+  if (filterHistory.length <= 1) return;
+  filterHistory.pop();
+  const prev = filterHistory[filterHistory.length - 1];
+  gameFilter.value = prev;
+  applyFilter(prev);
+  undoFilterBtn.disabled = filterHistory.length <= 1;
+  showToast('↩ 已退回上一步');
+}
+undoFilterBtn.addEventListener('click', undoTableFilter);
+
+// ── 全域鍵盤快捷鍵 ────────────────────────────
+document.addEventListener('keydown', e => {
+  const inInput = e.target.matches('input, textarea, select');
+  if (e.shiftKey && e.code === 'KeyD' && !inInput) {
+    e.preventDefault();
+    toggleTheme();
+  }
+  if ((e.ctrlKey || e.metaKey) && e.code === 'KeyZ' && !inInput) {
+    e.preventDefault();
+    undoTableFilter();
+  }
 });
 
 // ── 統一滾動事件 ─────────────────────────────

@@ -25,6 +25,7 @@
         <li><a href="#journey">體驗旅程</a></li>
         <li><a href="#support">FAQ</a></li>
       </ul>
+      <button id="themeToggle" title="切換主題 (Shift+D)" aria-label="切換主題">🌙</button>
       <button class="nav-toggle" id="navToggle" aria-label="選單">&#9776;</button>
     </div>
   </nav>
@@ -263,6 +264,15 @@
 
         <!-- 評分表 -->
         <div class="score-table-wrap reveal">
+          <div class="table-controls">
+            <label for="gameFilter">顯示：</label>
+            <select id="gameFilter">
+              <option value="both">兩款遊戲</option>
+              <option value="g1">🧠 知識王 LIVE</option>
+              <option value="g2">🎯 Kahoot!</option>
+            </select>
+            <button id="undoFilter" disabled title="退回上一步 (Ctrl+Z / ⌘Z)">↩ 退回</button>
+          </div>
           <table class="score-table">
             <thead>
               <tr>
@@ -675,6 +685,59 @@
     </div>
   </section>
 
+  <!-- ── 快捷功能指南 ── -->
+  <section class="section alt-bg">
+    <div class="container">
+      <div class="section-label">指南</div>
+      <h2 class="section-title">⌨️ 網站操作與<span class="c3">快捷功能指南</span></h2>
+      <p class="section-desc">善用這些操作讓瀏覽更流暢</p>
+      <div class="shortcut-grid">
+        <div class="shortcut-card reveal">
+          <div class="shortcut-key">Shift + D</div>
+          <div class="shortcut-desc">
+            <h4>切換深色 / 淺色主題</h4>
+            <p>點擊右上角 🌙 按鈕，或按 Shift+D 快速切換，偏好會自動儲存。</p>
+          </div>
+        </div>
+        <div class="shortcut-card reveal">
+          <div class="shortcut-key">Ctrl + Z</div>
+          <div class="shortcut-desc">
+            <h4>退回比較表篩選</h4>
+            <p>在比較分析區切換顯示的遊戲後，可按 Ctrl+Z（Mac：⌘Z）退回上一個狀態。</p>
+          </div>
+        </div>
+        <div class="shortcut-card reveal">
+          <div class="shortcut-key">Enter</div>
+          <div class="shortcut-desc">
+            <h4>送出 AI 客服訊息</h4>
+            <p>在右下角聊天框輸入問題後，按 Enter 即可送出，不用點按鈕。</p>
+          </div>
+        </div>
+        <div class="shortcut-card reveal">
+          <div class="shortcut-key">點擊 Tab</div>
+          <div class="shortcut-desc">
+            <h4>切換遊戲介紹內容</h4>
+            <p>每款遊戲介紹區的頁籤（遊戲介紹、玩法介紹、遊戲模式）可自由點擊切換。</p>
+          </div>
+        </div>
+        <div class="shortcut-card reveal">
+          <div class="shortcut-key">點擊 FAQ</div>
+          <div class="shortcut-desc">
+            <h4>展開常見問題</h4>
+            <p>點擊任一問題即可展開詳細說明，再點一次或點其他問題即可收合。</p>
+          </div>
+        </div>
+        <div class="shortcut-card reveal">
+          <div class="shortcut-key">↑ 右下角</div>
+          <div class="shortcut-desc">
+            <h4>快速回到頂部</h4>
+            <p>向下捲動後，右下角會出現 ↑ 按鈕，點擊即可滑回頁面頂端。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ── Footer ── -->
   <footer>
     <div class="container">
@@ -725,6 +788,7 @@
     </div>
   </div>
 
+  <div id="toastContainer"></div>
   <script src="script.js"></script>
 </body>
 </html>
