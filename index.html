@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>益智遊戲 UI 設計分析 | 使用者介面設計與評鑑</title>
+  <title>益智遊戲怎麼選？知識王 LIVE × Kahoot! 完整比較</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
@@ -21,8 +21,8 @@
         <li><a href="#game1">知識王 LIVE</a></li>
         <li><a href="#game2">Kahoot!</a></li>
         <li><a href="#comparison">比較分析</a></li>
-        <li><a href="#nielsen">Nielsen's</a></li>
-        <li><a href="#shneiderman">Shneiderman's</a></li>
+        <li><a href="#context">使用情境</a></li>
+        <li><a href="#journey">體驗旅程</a></li>
         <li><a href="#support">FAQ</a></li>
       </ul>
       <button class="nav-toggle" id="navToggle" aria-label="選單">&#9776;</button>
@@ -40,7 +40,7 @@
     <div class="hero-content">
       <p class="hero-eyebrow">使用者介面設計與評鑑 · 第二次作業</p>
       <h1 class="hero-title"><span id="typewriterEl"></span></h1>
-      <p class="hero-sub">從遊戲介面探索優質 UX 設計原則</p>
+      <p class="hero-sub">知識王 LIVE × Kahoot! 完整比較，幫你為孩子做出最好的選擇</p>
       <div class="hero-badges">
         <div class="badge badge-1">🧠 知識王 LIVE</div>
         <div class="badge-vs">VS</div>
@@ -459,122 +459,66 @@
     </div>
   </section>
 
-  <!-- ── Nielsen's 10 Heuristics ── -->
-  <section id="nielsen" class="section alt-bg">
+  <!-- ── 使用情境 ── -->
+  <section id="context" class="section alt-bg">
     <div class="container">
-      <div class="section-label">原則</div>
-      <h2 class="section-title">Nielsen's <span class="c1">10 Heuristics</span></h2>
-      <p class="section-desc">本遊戲介紹網頁的介面設計，如何體現尼爾森十大使用性原則</p>
+      <div class="section-label">情境</div>
+      <h2 class="section-title">適合的<span class="c3">使用情境</span></h2>
+      <p class="section-desc">兩款遊戲各有所長，不同的場合能帶出截然不同的體驗</p>
 
-      <div class="heuristics-grid">
+      <div style="display:flex; flex-direction:column; gap:28px;">
 
-        <div class="h-card reveal">
-          <div class="h-num">H1</div>
-          <h3>Visibility of System Status</h3>
-          <p class="h-cn">系統的可見度</p>
-          <p class="h-body">系統應持續向使用者回饋目前狀態，使使用者能掌握操作進度與系統回應。</p>
-          <div class="h-design">
-            <div class="design-label">設計對應</div>
-            <p>頂部彩色進度條（藍→紫→青漸層）即時反映頁面閱讀進度；固定導覽列在捲動時自動高亮目前所在區塊；Tab 按鈕點擊後以漸層色高亮顯示目前選取的頁籤，讓使用者隨時知道自己在哪個章節。</p>
+        <div class="note-card reveal">
+          <div class="note-header">
+            <span class="criteria-icon">🧠</span>
+            <div>
+              <h3>知識王 LIVE</h3>
+              <small>適合這些場合</small>
+            </div>
+          </div>
+          <div class="modes-grid" style="margin-top:24px;">
+            <div class="mode-card border-1">
+              <div class="mode-icon">🎮</div>
+              <h3>朋友間的益智對決</h3>
+              <p>和同學、朋友進行 1 對 1 知識競技，即時配對讓對局隨開隨打，金幣與排行榜讓勝負更有成就感。</p>
+            </div>
+            <div class="mode-card border-1">
+              <div class="mode-icon">🌙</div>
+              <h3>通勤與碎片時間娛樂</h3>
+              <p>隨時隨地打開就能配對一局，豐富題庫橫跨六大領域，讓零碎的等待時間變成充實的知識探索。</p>
+            </div>
+            <div class="mode-card border-1">
+              <div class="mode-icon">🎤</div>
+              <h3>校園活動與班級聚會</h3>
+              <p>主持模式讓一位同學當出題人，掃碼加入讓全班參與，適合班會、社團等多人同樂的場合。</p>
+            </div>
           </div>
         </div>
 
-        <div class="h-card reveal">
-          <div class="h-num">H2</div>
-          <h3>Match Between System and Real World</h3>
-          <p class="h-cn">接近生活的系統</p>
-          <p class="h-body">介面應使用使用者熟悉的語言、概念與情境，提升理解效率。</p>
-          <div class="h-design">
-            <div class="design-label">設計對應</div>
-            <p>使用 Emoji 圖示搭配文字（🏢開發商、📱平台、🎓族群）符合使用者對資訊分類的直覺認知；比較分析採用雷達圖與評分條等日常報告慣用視覺；導覽列以「知識王 LIVE」「比較分析」等日常語言命名，避免技術術語。</p>
+        <div class="note-card reveal">
+          <div class="note-header">
+            <span class="criteria-icon">🎯</span>
+            <div>
+              <h3>Kahoot!</h3>
+              <small>適合這些場合</small>
+            </div>
           </div>
-        </div>
-
-        <div class="h-card reveal">
-          <div class="h-num">H3</div>
-          <h3>User Control and Freedom</h3>
-          <p class="h-cn">控制權與自由度</p>
-          <p class="h-body">使用者應可自由導航並隨時返回或更改行為，避免被系統限制。</p>
-          <div class="h-design">
-            <div class="design-label">設計對應</div>
-            <p>固定 Sticky 導覽列讓使用者隨時跳轉至任意區塊；右下角返回頂部按鈕在捲動超過 400px 時出現；Tab 頁籤可自由切換，不強制按順序閱讀；無任何強制跳轉或 modal 覆蓋，使用者完全主導瀏覽節奏。</p>
-          </div>
-        </div>
-
-        <div class="h-card reveal">
-          <div class="h-num">H4</div>
-          <h3>Consistency and Standards</h3>
-          <p class="h-cn">一致性與標準化</p>
-          <p class="h-body">介面應遵循一致的設計規範，避免使用者重新學習操作模式。</p>
-          <div class="h-design">
-            <div class="design-label">設計對應</div>
-            <p>知識王 LIVE 與 Kahoot! 兩個介紹區塊採用完全相同的結構（section-label、section-title、三個 Tab、相同卡片版型）；所有分析卡片、模式卡片統一使用相同的圓角、間距與 hover 行為；全站藍色系代表知識王、紫色系代表 Kahoot! 且始終一致。</p>
-          </div>
-        </div>
-
-        <div class="h-card reveal">
-          <div class="h-num">H5</div>
-          <h3>Error Prevention</h3>
-          <p class="h-cn">錯誤預防</p>
-          <p class="h-body">系統應以設計避免錯誤發生，而非僅在錯誤後提供訊息。</p>
-          <div class="h-design">
-            <div class="design-label">設計對應</div>
-            <p>聯絡表單的姓名與 Email 欄位標記必填 *，Email 欄位提供即時格式驗證（輸入中即判斷）；若格式錯誤嘗試送出，表單不會提交，欄位邊框變紅並顯示說明文字；Tab 按鈕確保同一時間只有一個 active 狀態，防止介面進入非法狀態。</p>
-          </div>
-        </div>
-
-        <div class="h-card reveal">
-          <div class="h-num">H6</div>
-          <h3>Recognition Rather Than Recall</h3>
-          <p class="h-cn">辨識而非回想</p>
-          <p class="h-body">系統應降低使用者記憶負擔，透過視覺提示幫助辨識而非仰賴記憶。</p>
-          <div class="h-design">
-            <div class="design-label">設計對應</div>
-            <p>每個資訊卡片以 Emoji 作為視覺標識，使用者無需記憶各格子代表什麼；全站以藍色系代表知識王、紫色系代表 Kahoot!，任何地方看到顏色即知對應哪款遊戲；固定導覽列不需捲回頂部才能找到入口，降低記憶負擔。</p>
-          </div>
-        </div>
-
-        <div class="h-card reveal">
-          <div class="h-num">H7</div>
-          <h3>Flexibility and Efficiency of Use</h3>
-          <p class="h-cn">靈活度與使用效率</p>
-          <p class="h-body">系統應同時支援新手與熟練使用者，提高操作效率。</p>
-          <div class="h-design">
-            <div class="design-label">設計對應</div>
-            <p>新手可從 Hero 的「開始探索」按鈕逐節閱讀；熟悉架構的使用者可直接點選導覽列跳至目標區塊；Tab 設計讓使用者可跳過不感興趣的子頁面；比較分析同時提供「雷達圖（快速整體感）」與「評分表（逐項精確比較）」兩種閱讀深度。</p>
-          </div>
-        </div>
-
-        <div class="h-card reveal">
-          <div class="h-num">H8</div>
-          <h3>Aesthetic and Minimalist Design</h3>
-          <p class="h-cn">簡約的設計美學</p>
-          <p class="h-body">介面應避免資訊過載，只呈現必要資訊，避免無關元素干擾。</p>
-          <div class="h-design">
-            <div class="design-label">設計對應</div>
-            <p>深色背景（#07071a）避免視覺噪音，讓文字與彩色元素突出；Tab 折疊機制每次只顯示一個面板，避免過多內容同時堆疊；全站限用藍/紫/青三種強調色；各區塊間留有充足的白空間，引導視線自然流動。</p>
-          </div>
-        </div>
-
-        <div class="h-card reveal">
-          <div class="h-num">H9</div>
-          <h3>Help Users Recognize, Diagnose, and Recover from Errors</h3>
-          <p class="h-cn">幫助使用者辨識與回復錯誤</p>
-          <p class="h-body">提供清楚的錯誤訊息與修正方式，讓使用者能夠從錯誤中恢復。</p>
-          <div class="h-design">
-            <div class="design-label">設計對應</div>
-            <p>聯絡表單驗證失敗時，欄位邊框變紅、欄位下方出現清楚的錯誤說明（「請填寫姓名」、「請確認 Email 格式（例：abc@gmail.com）」），具體引導使用者修正；送出成功後顯示綠色成功訊息確認操作完成。</p>
-          </div>
-        </div>
-
-        <div class="h-card reveal">
-          <div class="h-num">H10</div>
-          <h3>Help and Documentation</h3>
-          <p class="h-cn">幫助與輔助文件</p>
-          <p class="h-body">提供必要說明，讓使用者遇到問題時有清楚的求助管道。</p>
-          <div class="h-design">
-            <div class="design-label">設計對應</div>
-            <p>設有 FAQ 常見問題手風琴區塊，直接回答兩款遊戲的常見疑問；提供聯絡表單作為反饋與求助管道；Hero 區塊的「開始探索 ↓」引導按鈕幫助初次到訪的使用者知道如何開始瀏覽；每個 Section 的 section-desc 副標題也在引導使用者理解當前區塊的目的。</p>
+          <div class="modes-grid" style="margin-top:24px;">
+            <div class="mode-card border-2">
+              <div class="mode-icon">📚</div>
+              <h3>課堂即時互動測驗</h3>
+              <p>老師在大螢幕投影題目，學生用手機搶答，不需帳號即可加入，課堂氣氛瞬間活絡起來。</p>
+            </div>
+            <div class="mode-card border-2">
+              <div class="mode-icon">📊</div>
+              <h3>課後學習成效評量</h3>
+              <p>Assign 作業模式讓老師指派題組，系統自動統整全班答題報告，快速掌握每位學生的學習狀況。</p>
+            </div>
+            <div class="mode-card border-2">
+              <div class="mode-icon">🏢</div>
+              <h3>企業培訓與研習活動</h3>
+              <p>Team Mode 支援分組競賽，主持人即時掌握全場答題狀況，遊戲化形式讓培訓內容更容易吸收。</p>
+            </div>
           </div>
         </div>
 
@@ -582,77 +526,91 @@
     </div>
   </section>
 
-  <!-- ── Shneiderman's 8 Golden Rules ── -->
-  <section id="shneiderman" class="section">
+  <!-- ── 玩家體驗旅程 ── -->
+  <section id="journey" class="section">
     <div class="container">
-      <div class="section-label">設計法則</div>
-      <h2 class="section-title">Shneiderman's <span class="c2">8 Golden Rules</span></h2>
-      <p class="section-desc">本網頁介面設計如何對應 Ben Shneiderman 的八條黃金法則</p>
+      <div class="section-label">旅程</div>
+      <h2 class="section-title">玩家<span class="c1">體驗旅程</span></h2>
+      <p class="section-desc">從打開遊戲到完成一局，帶你完整走過兩款遊戲的互動流程</p>
 
-      <div class="rules-grid">
+      <div class="journey-wrap">
 
-        <div class="rule-card reveal">
-          <div class="rule-n">01</div>
-          <h3>Strive for Consistency</h3>
-          <p class="rule-cn">追求一致性</p>
-          <p class="rule-body">兩款遊戲的介紹區塊使用相同的卡片結構、Tab 元件與資訊佈局。相同的操作在不同位置產生相同結果，降低學習成本。</p>
-          <div class="rule-example">✅ 相同卡片格式 · 統一色彩系統 · 一致的 Tab 操作邏輯</div>
+        <!-- 知識王 LIVE -->
+        <div>
+          <div class="journey-tag">
+            <span class="game-chip chip-1">知識王 LIVE</span>
+            <small>1 對 1 競技對戰流程</small>
+          </div>
+          <div class="journey-steps">
+            <div class="journey-step reveal">
+              <div class="journey-num c1-bg">01</div>
+              <h4>下載 &amp; 登入</h4>
+              <p>從商店下載後以 Google 帳號一鍵登入，進度雲端同步不遺失。</p>
+            </div>
+            <div class="journey-connector"></div>
+            <div class="journey-step reveal">
+              <div class="journey-num c1-bg">02</div>
+              <h4>選擇模式</h4>
+              <p>城市闖關、隨機對戰、好友邀請、主持模式，依心情自由切換。</p>
+            </div>
+            <div class="journey-connector"></div>
+            <div class="journey-step reveal">
+              <div class="journey-num c1-bg">03</div>
+              <h4>即時配對</h4>
+              <p>系統自動媒合實力相近對手，數秒內進入雙人倒數開始。</p>
+            </div>
+            <div class="journey-connector"></div>
+            <div class="journey-step reveal">
+              <div class="journey-num c1-bg">04</div>
+              <h4>限時搶答</h4>
+              <p>每題 10 秒，答對越快加成越高，眼明手快機制讓每秒都緊張。</p>
+            </div>
+            <div class="journey-connector"></div>
+            <div class="journey-step reveal">
+              <div class="journey-num c1-bg">05</div>
+              <h4>結算 &amp; 排行</h4>
+              <p>勝者獲得金幣，排行榜同步更新，可立刻發起下一場挑戰。</p>
+            </div>
+          </div>
         </div>
 
-        <div class="rule-card reveal">
-          <div class="rule-n">02</div>
-          <h3>Seek Universal Usability</h3>
-          <p class="rule-cn">追求普遍可用性</p>
-          <p class="rule-body">響應式設計支援各種螢幕尺寸。大字體與高對比色彩確保可讀性。結構化內容讓不同背景的使用者都能快速理解。</p>
-          <div class="rule-example">✅ 響應式設計 · 高對比配色 · 清晰字體層級</div>
-        </div>
-
-        <div class="rule-card reveal">
-          <div class="rule-n">03</div>
-          <h3>Offer Informative Feedback</h3>
-          <p class="rule-cn">提供有意義的回饋</p>
-          <p class="rule-body">Hover 效果、點擊動畫、Tab 切換高亮、表單驗證即時回應、圖表動畫呈現資料載入——每個互動都有對應的視覺回饋。</p>
-          <div class="rule-example">✅ Hover 動效 · 即時表單驗證回饋 · 圖表載入動畫</div>
-        </div>
-
-        <div class="rule-card reveal">
-          <div class="rule-n">04</div>
-          <h3>Design Dialogs to Yield Closure</h3>
-          <p class="rule-cn">設計有始有終的對話</p>
-          <p class="rule-body">表單送出後顯示成功確認訊息，給予明確的完成感。每個 Section 有清晰的開頭標題與結尾間距，讓使用者感知各區塊的邊界。</p>
-          <div class="rule-example">✅ 表單送出成功訊息 · 明確的區塊邊界 · Section 標題系統</div>
-        </div>
-
-        <div class="rule-card reveal">
-          <div class="rule-n">05</div>
-          <h3>Prevent Errors</h3>
-          <p class="rule-cn">預防錯誤</p>
-          <p class="rule-body">聯絡表單提供 email 格式即時驗證，必填欄位標記 *，送出前自動完整性檢查。Tab 按鈕確保同一時間只有一個 active 狀態。</p>
-          <div class="rule-example">✅ Email 格式驗證 · 必填欄位標記 · 互斥 Tab 狀態控制</div>
-        </div>
-
-        <div class="rule-card reveal">
-          <div class="rule-n">06</div>
-          <h3>Permit Easy Reversal of Actions</h3>
-          <p class="rule-cn">允許輕鬆反轉操作</p>
-          <p class="rule-body">使用者可隨時切換不同的 Tab 頁籤重新查看資訊。返回頂部按鈕讓導航可逆。導覽列允許隨時跳轉至任意區塊，不會困住使用者。</p>
-          <div class="rule-example">✅ Tab 可自由切換 · 返回頂部按鈕 · 全域 Sticky 導覽列</div>
-        </div>
-
-        <div class="rule-card reveal">
-          <div class="rule-n">07</div>
-          <h3>Keep Users in Control</h3>
-          <p class="rule-cn">讓使用者掌握主導權</p>
-          <p class="rule-body">網頁採一般垂直捲動瀏覽方式，使用者自行決定閱讀速度與順序。無強制性彈窗或自動跳轉，所有內容由使用者主動探索。</p>
-          <div class="rule-example">✅ 自由捲動瀏覽 · 無強制彈窗 · 使用者主導閱讀節奏</div>
-        </div>
-
-        <div class="rule-card reveal">
-          <div class="rule-n">08</div>
-          <h3>Reduce Short-Term Memory Load</h3>
-          <p class="rule-cn">降低短期記憶負荷</p>
-          <p class="rule-body">Emoji 圖示讓各類別一目了然。藍色代表知識王、紫色代表 Kahoot!，全程顏色一致。Section 標題清楚標示當前內容，無需記憶頁面位置。</p>
-          <div class="rule-example">✅ 色彩編碼系統 · Emoji 圖示輔助 · 清晰的 Section 標題</div>
+        <!-- Kahoot! -->
+        <div>
+          <div class="journey-tag">
+            <span class="game-chip chip-2">Kahoot!</span>
+            <small>課堂多人搶答流程</small>
+          </div>
+          <div class="journey-steps">
+            <div class="journey-step reveal">
+              <div class="journey-num c2-bg">01</div>
+              <h4>建立題組</h4>
+              <p>主持人選擇或自建題組，按下開始後系統產生 6 位數 Game PIN。</p>
+            </div>
+            <div class="journey-connector"></div>
+            <div class="journey-step reveal">
+              <div class="journey-num c2-bg">02</div>
+              <h4>掃碼加入</h4>
+              <p>輸入 PIN 或掃 QR Code 進入等待大廳，不需帳號立即加入。</p>
+            </div>
+            <div class="journey-connector"></div>
+            <div class="journey-step reveal">
+              <div class="journey-num c2-bg">03</div>
+              <h4>大螢幕出題</h4>
+              <p>題目呈現在主持人螢幕，參與者手機只顯示四色選項，簡潔清晰。</p>
+            </div>
+            <div class="journey-connector"></div>
+            <div class="journey-step reveal">
+              <div class="journey-num c2-bg">04</div>
+              <h4>倒數搶答</h4>
+              <p>計時條由綠轉紅，答題後立即顯示對錯與全場正確率，熱烈搶答。</p>
+            </div>
+            <div class="journey-connector"></div>
+            <div class="journey-step reveal">
+              <div class="journey-num c2-bg">05</div>
+              <h4>報告下載</h4>
+              <p>排行榜公布後可下載完整答題報告，掌握每位參與者的作答狀況。</p>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -721,7 +679,7 @@
   <footer>
     <div class="container">
       <p>使用者介面設計與評鑑 · 第二次作業</p>
-      <p class="footer-sub">設計原則：Nielsen's 10 Heuristics · Shneiderman's 8 Golden Rules</p>
+      <p class="footer-sub">分析對象：知識王 LIVE · Kahoot!</p>
     </div>
   </footer>
 

@@ -44,7 +44,7 @@ function updateBackTop() {
 backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
 // ── 打字機效果 ───────────────────────────────
-const TYPEWRITER_TEXT = '益智遊戲 UI 設計分析';
+const TYPEWRITER_TEXT = '益智遊戲怎麼選？';
 const typeEl = document.getElementById('typewriterEl');
 let typeIdx = 0;
 
