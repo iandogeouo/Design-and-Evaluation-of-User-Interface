@@ -704,6 +704,27 @@
     </div>
   </div>
 
+  <!-- AI 線上客服 -->
+  <button id="chatBtn" aria-label="線上客服">💬</button>
+  <div id="chatPanel" aria-live="polite">
+    <div id="chatHeader">
+      <div>
+        <div class="chat-title">🤖 AI 遊戲顧問</div>
+        <div class="chat-sub">幫你為孩子選擇最適合的遊戲</div>
+      </div>
+      <button id="chatClose" aria-label="關閉">✕</button>
+    </div>
+    <div id="chatMessages">
+      <div class="msg msg-ai">
+        <div class="msg-bubble">👋 你好！我是 AI 遊戲顧問，可以幫你比較知識王 LIVE 和 Kahoot!，請問有什麼我可以幫你的？</div>
+      </div>
+    </div>
+    <div id="chatInputWrap">
+      <input type="text" id="chatInput" placeholder="輸入問題…" autocomplete="off" />
+      <button id="chatSend" aria-label="送出">↑</button>
+    </div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
