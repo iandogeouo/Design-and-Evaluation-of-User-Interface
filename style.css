@@ -508,6 +508,12 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 .note-body { display: flex; flex-direction: column; gap: 12px; }
 .note-game { padding: 12px 14px; border-radius: var(--r-sm); }
+
+/* 兩欄比較版型控制 */
+.seven-criteria.layout-g1-only .note-g2 { display: none; }
+.seven-criteria.layout-g2-only .note-g1 { display: none; }
+.seven-criteria.layout-swap .note-g1 { order: 2; }
+.seven-criteria.layout-swap .note-g2 { order: 1; }
 .note-g1 { background: rgba(33,150,243,0.07); border-left: 3px solid var(--c1); }
 .note-g2 { background: rgba(156,77,255,0.07); border-left: 3px solid var(--c2); }
 .game-chip {
@@ -1153,7 +1159,8 @@ html.light .modal-box { background: var(--bg2); }
 html.light .modal-overlay { background: rgba(0,0,0,0.5); }
 html.light #chatPanel { background: var(--bg2); }
 html.light .msg-ai .msg-bubble { background: rgba(0,0,0,0.06); }
-html.light #gameFilter { background: var(--bg2); }
+html.light .seg-ctrl { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.12); }
+html.light .font-ctrl { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.12); }
 @media (max-width: 760px) {
   html.light .nav-links { background: rgba(240,240,248,0.97); border-bottom-color: rgba(0,0,0,0.1); }
 }
@@ -1172,41 +1179,96 @@ html.light #gameFilter { background: var(--bg2); }
 }
 #themeToggle:hover { color: var(--text); background: var(--bg-hover); }
 
-/* ═══════════════════════════════════════════
-   比較表控制列
-═══════════════════════════════════════════ */
-.table-controls {
-  display: flex; align-items: center; gap: 10px;
-  margin-bottom: 12px; flex-wrap: wrap;
-}
-.table-controls label { font-size: .83rem; color: var(--muted); }
-#gameFilter {
+/* ── 字體大小控制 ── */
+.font-ctrl {
+  display: flex;
+  align-items: center;
   background: var(--bg-card);
   border: 1px solid var(--border-hi);
-  color: var(--text);
-  border-radius: var(--r-sm);
-  padding: 5px 10px;
-  font-family: inherit; font-size: .83rem; cursor: pointer;
-  transition: border-color var(--t);
+  border-radius: 20px;
+  padding: 3px;
+  gap: 2px;
+  flex-shrink: 0;
 }
-#gameFilter:focus { outline: none; border-color: var(--c3); }
-#undoFilter {
-  font-size: .8rem; padding: 5px 12px;
-  border-radius: var(--r-sm);
-  border: 1px solid var(--border-hi);
-  color: var(--muted); background: var(--bg-card);
+#fontDecrease, #fontIncrease {
+  font-size: .75rem;
+  font-weight: 700;
+  font-family: inherit;
+  padding: 4px 10px;
+  border-radius: 17px;
+  border: none;
+  color: var(--muted);
+  background: transparent;
+  cursor: pointer;
   transition: color var(--t), background var(--t);
+  line-height: 1;
+  white-space: nowrap;
 }
-#undoFilter:not(:disabled):hover { color: var(--text); background: var(--bg-hover); }
-#undoFilter:disabled { opacity: 0.3; cursor: not-allowed; }
+#fontDecrease:hover:not(:disabled), #fontIncrease:hover:not(:disabled) {
+  color: var(--text); background: var(--bg-hover);
+}
+#fontDecrease:disabled, #fontIncrease:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* ═══════════════════════════════════════════
+   比較表 — header 內嵌分段選擇器
+═══════════════════════════════════════════ */
+
+/* 分段按鈕 (Segmented Control) */
+.seg-ctrl {
+  display: inline-flex;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border-hi);
+  border-radius: 20px;
+  padding: 3px;
+  gap: 2px;
+}
+.seg-btn {
+  padding: 5px 14px;
+  border-radius: 17px;
+  font-size: .78rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color var(--t), background var(--t);
+  white-space: nowrap;
+  line-height: 1.4;
+}
+.seg-btn:hover { color: var(--text); }
+
+/* 欄 A active → 藍色 */
+[data-panel="a"] .seg-btn.active {
+  background: rgba(33,150,243,0.22);
+  color: var(--c1);
+}
+/* 欄 B active → 紫色 */
+[data-panel="b"] .seg-btn.active {
+  background: rgba(156,77,255,0.22);
+  color: var(--c2);
+}
+
+/* Table header cells */
 .score-table thead th {
   position: sticky;
   top: var(--nav-h);
   z-index: 5;
   box-shadow: 0 1px 0 var(--border);
   background: var(--bg);
+  padding: 14px 16px;
+  vertical-align: middle;
 }
-.score-table td.hidden-col, .score-table th.hidden-col { display: none; }
+.th-criteria {
+  font-size: .82rem; font-weight: 700;
+  letter-spacing: .05em; color: var(--muted);
+}
+/* column header cells: centre the seg-ctrl */
+.score-table .th-1,
+.score-table .th-2 {
+  text-align: center;
+}
+.score-table th .seg-ctrl { margin: 0 auto; }
 
 /* ═══════════════════════════════════════════
    Toast 通知

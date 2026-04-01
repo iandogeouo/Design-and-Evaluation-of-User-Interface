@@ -25,6 +25,10 @@
         <li><a href="#journey">體驗旅程</a></li>
         <li><a href="#support">FAQ</a></li>
       </ul>
+      <div class="font-ctrl">
+        <button id="fontDecrease" title="縮小字體 (Shift+−)" aria-label="縮小字體">A−</button>
+        <button id="fontIncrease" title="放大字體 (Shift++)" aria-label="放大字體">A+</button>
+      </div>
       <button id="themeToggle" title="切換主題 (Shift+D)" aria-label="切換主題">🌙</button>
       <button class="nav-toggle" id="navToggle" aria-label="選單">&#9776;</button>
     </div>
@@ -264,21 +268,22 @@
 
         <!-- 評分表 -->
         <div class="score-table-wrap reveal">
-          <div class="table-controls">
-            <label for="gameFilter">顯示：</label>
-            <select id="gameFilter">
-              <option value="both">兩款遊戲</option>
-              <option value="g1">🧠 知識王 LIVE</option>
-              <option value="g2">🎯 Kahoot!</option>
-            </select>
-            <button id="undoFilter" disabled title="退回上一步 (Ctrl+Z / ⌘Z)">↩ 退回</button>
-          </div>
           <table class="score-table">
             <thead>
               <tr>
-                <th>評估項目</th>
-                <th class="th-1">🧠 知識王 LIVE</th>
-                <th class="th-2">🎯 Kahoot!</th>
+                <th class="th-criteria">評估項目</th>
+                <th class="th-1">
+                  <div class="seg-ctrl" data-panel="a">
+                    <button class="seg-btn active" data-val="g1">🧠 知識王</button>
+                    <button class="seg-btn" data-val="g2">🎯 Kahoot!</button>
+                  </div>
+                </th>
+                <th class="th-2">
+                  <div class="seg-ctrl" data-panel="b">
+                    <button class="seg-btn" data-val="g1">🧠 知識王</button>
+                    <button class="seg-btn active" data-val="g2">🎯 Kahoot!</button>
+                  </div>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -700,10 +705,17 @@
           </div>
         </div>
         <div class="shortcut-card reveal">
+          <div class="shortcut-key">Shift + +/−</div>
+          <div class="shortcut-desc">
+            <h4>調整字體大小</h4>
+            <p>按 Shift+= 放大字體、Shift+− 縮小字體、Shift+0 重設回預設大小，偏好自動儲存。</p>
+          </div>
+        </div>
+        <div class="shortcut-card reveal">
           <div class="shortcut-key">Ctrl + Z</div>
           <div class="shortcut-desc">
-            <h4>退回比較表篩選</h4>
-            <p>在比較分析區切換顯示的遊戲後，可按 Ctrl+Z（Mac：⌘Z）退回上一個狀態。</p>
+            <h4>退回比較欄選擇</h4>
+            <p>在比較分析區切換欄位後，可按 Ctrl+Z（Mac：⌘Z）退回上一步。</p>
           </div>
         </div>
         <div class="shortcut-card reveal">

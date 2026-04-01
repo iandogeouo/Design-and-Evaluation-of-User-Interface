@@ -524,41 +524,91 @@ function showToast(msg, duration = 3500) {
   }, duration);
 }
 
-// ── 比較表篩選 + 退回 ─────────────────────────
-const gameFilter  = document.getElementById('gameFilter');
-const undoFilterBtn = document.getElementById('undoFilter');
-const filterHistory = ['both'];
+// ── 兩欄比較選擇器（分段按鈕）────────────────────
+const segCtrlA    = document.querySelector('.seg-ctrl[data-panel="a"]');
+const segCtrlB    = document.querySelector('.seg-ctrl[data-panel="b"]');
+const sevenCriteria = document.querySelector('.seven-criteria');
+const scoreRows   = document.querySelectorAll('.score-table tbody tr');
 
-document.querySelectorAll('.score-table tbody tr').forEach(row => {
-  row.cells[1].classList.add('col-1');
-  row.cells[2].classList.add('col-2');
-});
-
-function applyFilter(val) {
-  const isHideG1 = val === 'g2';
-  const isHideG2 = val === 'g1';
-  document.querySelector('.score-table .th-1').classList.toggle('hidden-col', isHideG1);
-  document.querySelector('.score-table .th-2').classList.toggle('hidden-col', isHideG2);
-  document.querySelectorAll('.score-table .col-1').forEach(el => el.classList.toggle('hidden-col', isHideG1));
-  document.querySelectorAll('.score-table .col-2').forEach(el => el.classList.toggle('hidden-col', isHideG2));
+function getPanelVal(ctrl) {
+  return ctrl.querySelector('.seg-btn.active').dataset.val;
 }
 
-gameFilter.addEventListener('change', () => {
-  filterHistory.push(gameFilter.value);
-  undoFilterBtn.disabled = false;
-  applyFilter(gameFilter.value);
+// Cache initial cell HTML (g1 = col index 1, g2 = col index 2)
+const rowData = [];
+scoreRows.forEach(row => {
+  rowData.push({ g1: row.cells[1].innerHTML, g2: row.cells[2].innerHTML });
 });
 
-function undoTableFilter() {
-  if (filterHistory.length <= 1) return;
-  filterHistory.pop();
-  const prev = filterHistory[filterHistory.length - 1];
-  gameFilter.value = prev;
-  applyFilter(prev);
-  undoFilterBtn.disabled = filterHistory.length <= 1;
+function applyPanels(updateTable) {
+  const a = getPanelVal(segCtrlA);
+  const b = getPanelVal(segCtrlB);
+
+  if (updateTable) {
+    scoreRows.forEach((row, i) => {
+      row.cells[1].innerHTML = rowData[i][a];
+      row.cells[2].innerHTML = rowData[i][b];
+      row.cells[1].querySelectorAll('.bar[data-w]').forEach(bar => { bar.style.width = bar.dataset.w + '%'; });
+      row.cells[2].querySelectorAll('.bar[data-w]').forEach(bar => { bar.style.width = bar.dataset.w + '%'; });
+    });
+  }
+
+  sevenCriteria.classList.remove('layout-default', 'layout-swap', 'layout-g1-only', 'layout-g2-only');
+  if      (a === 'g1' && b === 'g2') sevenCriteria.classList.add('layout-default');
+  else if (a === 'g2' && b === 'g1') sevenCriteria.classList.add('layout-swap');
+  else if (a === 'g1' && b === 'g1') sevenCriteria.classList.add('layout-g1-only');
+  else                                sevenCriteria.classList.add('layout-g2-only');
+}
+
+// 歷史記錄，支援 Ctrl+Z 退回
+const panelHistory = [{ a: 'g1', b: 'g2' }];
+
+// 綁定每個 seg-ctrl 的按鈕
+[segCtrlA, segCtrlB].forEach(ctrl => {
+  ctrl.querySelectorAll('.seg-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      ctrl.querySelectorAll('.seg-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      panelHistory.push({ a: getPanelVal(segCtrlA), b: getPanelVal(segCtrlB) });
+      applyPanels(true);
+    });
+  });
+});
+
+function undoPanels() {
+  if (panelHistory.length <= 1) return;
+  panelHistory.pop();
+  const prev = panelHistory[panelHistory.length - 1];
+  segCtrlA.querySelectorAll('.seg-btn').forEach(b => b.classList.toggle('active', b.dataset.val === prev.a));
+  segCtrlB.querySelectorAll('.seg-btn').forEach(b => b.classList.toggle('active', b.dataset.val === prev.b));
+  applyPanels(true);
   showToast('↩ 已退回上一步');
 }
-undoFilterBtn.addEventListener('click', undoTableFilter);
+
+applyPanels(false); // 初始套用版型，不重新注入 DOM（讓 barObserver 動畫正常播放）
+
+// ── 字體大小調節 ──────────────────────────────
+const FONT_LEVELS = [85, 92, 100, 108, 116];
+let fontLevelIdx = 2; // 預設 100%
+
+function applyFontSize(idx) {
+  const next = Math.max(0, Math.min(FONT_LEVELS.length - 1, idx));
+  const changed = next !== fontLevelIdx;
+  fontLevelIdx = next;
+  document.documentElement.style.fontSize = FONT_LEVELS[fontLevelIdx] + '%';
+  localStorage.setItem('fontLevel', fontLevelIdx);
+  document.getElementById('fontDecrease').disabled = fontLevelIdx <= 0;
+  document.getElementById('fontIncrease').disabled = fontLevelIdx >= FONT_LEVELS.length - 1;
+  if (changed && fontLevelIdx !== 2) showToast(`字體大小：${FONT_LEVELS[fontLevelIdx]}%`);
+}
+
+(function initFontSize() {
+  const saved = parseInt(localStorage.getItem('fontLevel'));
+  applyFontSize(isNaN(saved) ? 2 : saved);
+})();
+
+document.getElementById('fontDecrease').addEventListener('click', () => applyFontSize(fontLevelIdx - 1));
+document.getElementById('fontIncrease').addEventListener('click', () => applyFontSize(fontLevelIdx + 1));
 
 // ── 全域鍵盤快捷鍵 ────────────────────────────
 document.addEventListener('keydown', e => {
@@ -569,7 +619,21 @@ document.addEventListener('keydown', e => {
   }
   if ((e.ctrlKey || e.metaKey) && e.code === 'KeyZ' && !inInput) {
     e.preventDefault();
-    undoTableFilter();
+    undoPanels();
+  }
+  // 字體大小：Shift+= 放大、Shift+- 縮小、Shift+0 重設
+  if (e.shiftKey && (e.code === 'Equal' || e.code === 'NumpadAdd') && !inInput) {
+    e.preventDefault();
+    applyFontSize(fontLevelIdx + 1);
+  }
+  if (e.shiftKey && (e.code === 'Minus' || e.code === 'NumpadSubtract') && !inInput) {
+    e.preventDefault();
+    applyFontSize(fontLevelIdx - 1);
+  }
+  if (e.shiftKey && e.code === 'Digit0' && !inInput) {
+    e.preventDefault();
+    applyFontSize(2);
+    showToast('字體大小已重設');
   }
 });
 
