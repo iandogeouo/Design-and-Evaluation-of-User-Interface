@@ -271,7 +271,10 @@
           <table class="score-table">
             <thead>
               <tr>
-                <th class="th-criteria">評估項目</th>
+                <th class="th-criteria">
+                  評估項目
+                  <button id="undoPanel" disabled title="退回上一步 (Ctrl+Z / ⌘Z)">↩</button>
+                </th>
                 <th class="th-1">
                   <div class="seg-ctrl" data-panel="a">
                     <button class="seg-btn active" data-val="g1">🧠 知識王</button>
@@ -719,13 +722,6 @@
           </div>
         </div>
         <div class="shortcut-card reveal">
-          <div class="shortcut-key">Enter</div>
-          <div class="shortcut-desc">
-            <h4>送出 AI 客服訊息</h4>
-            <p>在右下角聊天框輸入問題後，按 Enter 即可送出，不用點按鈕。</p>
-          </div>
-        </div>
-        <div class="shortcut-card reveal">
           <div class="shortcut-key">點擊 Tab</div>
           <div class="shortcut-desc">
             <h4>切換遊戲介紹內容</h4>
@@ -776,27 +772,6 @@
       <div class="modal-divider"></div>
       <p class="modal-section-label">在本介紹網頁的應用</p>
       <div class="modal-points" id="modalPoints"></div>
-    </div>
-  </div>
-
-  <!-- AI 線上客服 -->
-  <button id="chatBtn" aria-label="線上客服">💬</button>
-  <div id="chatPanel" aria-live="polite">
-    <div id="chatHeader">
-      <div>
-        <div class="chat-title">🤖 AI 遊戲顧問</div>
-        <div class="chat-sub">幫你為孩子選擇最適合的遊戲</div>
-      </div>
-      <button id="chatClose" aria-label="關閉">✕</button>
-    </div>
-    <div id="chatMessages">
-      <div class="msg msg-ai">
-        <div class="msg-bubble">👋 你好！我是 AI 遊戲顧問，可以幫你比較知識王 LIVE 和 Kahoot!，請問有什麼我可以幫你的？</div>
-      </div>
-    </div>
-    <div id="chatInputWrap">
-      <input type="text" id="chatInput" placeholder="輸入問題…" autocomplete="off" />
-      <button id="chatSend" aria-label="送出">↑</button>
     </div>
   </div>
 

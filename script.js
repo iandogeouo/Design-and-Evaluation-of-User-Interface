@@ -562,6 +562,7 @@ function applyPanels(updateTable) {
 
 // 歷史記錄，支援 Ctrl+Z 退回
 const panelHistory = [{ a: 'g1', b: 'g2' }];
+const undoPanelBtn = document.getElementById('undoPanel');
 
 // 綁定每個 seg-ctrl 的按鈕
 [segCtrlA, segCtrlB].forEach(ctrl => {
@@ -570,6 +571,7 @@ const panelHistory = [{ a: 'g1', b: 'g2' }];
       ctrl.querySelectorAll('.seg-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       panelHistory.push({ a: getPanelVal(segCtrlA), b: getPanelVal(segCtrlB) });
+      undoPanelBtn.disabled = false;
       applyPanels(true);
     });
   });
@@ -581,9 +583,11 @@ function undoPanels() {
   const prev = panelHistory[panelHistory.length - 1];
   segCtrlA.querySelectorAll('.seg-btn').forEach(b => b.classList.toggle('active', b.dataset.val === prev.a));
   segCtrlB.querySelectorAll('.seg-btn').forEach(b => b.classList.toggle('active', b.dataset.val === prev.b));
+  undoPanelBtn.disabled = panelHistory.length <= 1;
   applyPanels(true);
   showToast('↩ 已退回上一步');
 }
+undoPanelBtn.addEventListener('click', undoPanels);
 
 applyPanels(false); // 初始套用版型，不重新注入 DOM（讓 barObserver 動畫正常播放）
 
@@ -650,80 +654,3 @@ window.addEventListener('resize', updateNav);
 // 初始化
 onScroll();
 
-// ── AI 線上客服 ───────────────────────────────
-const GEMINI_KEY = 'AIzaSyA1kwHhRPAdA-fvi0bP0kyv1EudOYD8awg';
-const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite-preview:generateContent?key=${GEMINI_KEY}`;
-const SYSTEM_PROMPT = `你是一位親切的親子遊戲顧問，專門幫助台灣家長了解並比較「知識王 LIVE」和「Kahoot!」這兩款益智遊戲，協助他們為孩子選擇最適合的遊戲。
-
-知識王 LIVE：台灣 BRAVE KNIGHT 開發，70 萬次下載，適合國小至國中生，提供 1v1 對戰、城市闖關、好友邀請、主持模式，涵蓋理科、文科、藝文、流行、娛樂、生活六大領域，免費遊玩含微課金。
-
-Kahoot!：挪威 2013 年創立，全球超過 3 億用戶，適合學生、教師、企業，提供 Classic、Team Mode、Assign 作業模式，免費基本版，進階功能需訂閱。
-
-請以簡短、親切、易懂的繁體中文回答，每次回覆控制在 150 字以內。如果問題與這兩款遊戲無關，請婉轉引導回主題。`;
-
-const chatHistory = [
-  { role: 'user',  parts: [{ text: SYSTEM_PROMPT }] },
-  { role: 'model', parts: [{ text: '好的！我會以親子遊戲顧問的身份，用繁體中文幫家長比較知識王 LIVE 和 Kahoot!，協助選擇適合孩子的遊戲。' }] }
-];
-
-const chatBtn      = document.getElementById('chatBtn');
-const chatPanel    = document.getElementById('chatPanel');
-const chatClose    = document.getElementById('chatClose');
-const chatInput    = document.getElementById('chatInput');
-const chatSend     = document.getElementById('chatSend');
-const chatMessages = document.getElementById('chatMessages');
-
-chatBtn.addEventListener('click', () => {
-  chatPanel.classList.toggle('open');
-  if (chatPanel.classList.contains('open')) chatInput.focus();
-});
-chatClose.addEventListener('click', () => chatPanel.classList.remove('open'));
-
-chatInput.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChat(); }
-});
-chatSend.addEventListener('click', sendChat);
-
-function appendMsg(role, text) {
-  const div = document.createElement('div');
-  div.className = `msg msg-${role}`;
-  div.innerHTML = `<div class="msg-bubble">${text}</div>`;
-  chatMessages.appendChild(div);
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-  return div;
-}
-
-async function sendChat() {
-  const text = chatInput.value.trim();
-  if (!text) return;
-  chatInput.value = '';
-  chatSend.disabled = true;
-
-  appendMsg('user', text);
-  chatHistory.push({ role: 'user', parts: [{ text }] });
-
-  const typing = appendMsg('ai', '回覆中…');
-  typing.classList.add('msg-typing');
-
-  try {
-    const res = await fetch(GEMINI_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ contents: chatHistory })
-    });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error?.message || `HTTP ${res.status}`);
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || '抱歉，我現在無法回應，請稍後再試。';
-    chatHistory.push({ role: 'model', parts: [{ text: reply }] });
-    typing.querySelector('.msg-bubble').textContent = reply;
-    typing.classList.remove('msg-typing');
-  } catch (err) {
-    console.error('Gemini error:', err);
-    typing.querySelector('.msg-bubble').textContent = `錯誤：${err.message}`;
-    typing.classList.remove('msg-typing');
-  }
-
-  chatSend.disabled = false;
-  chatInput.focus();
-  chatMessages.scrollTop = chatMessages.scrollHeight;
-}
