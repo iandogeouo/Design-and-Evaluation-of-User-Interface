@@ -1089,7 +1089,7 @@ html.light .font-ctrl { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0
   gap: 2px;
   flex-shrink: 0;
 }
-#fontDecrease, #fontIncrease {
+#fontDecrease, #fontReset, #fontIncrease {
   font-size: .75rem;
   font-weight: 700;
   font-family: inherit;
@@ -1103,7 +1103,7 @@ html.light .font-ctrl { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0
   line-height: 1;
   white-space: nowrap;
 }
-#fontDecrease:hover:not(:disabled), #fontIncrease:hover:not(:disabled) {
+#fontDecrease:hover:not(:disabled), #fontReset:hover, #fontIncrease:hover:not(:disabled) {
   color: var(--text); background: var(--bg-hover);
 }
 #fontDecrease:disabled, #fontIncrease:disabled { opacity: 0.3; cursor: not-allowed; }
@@ -1326,11 +1326,7 @@ html.light .page-hero { background: linear-gradient(160deg, #f0f0fa 0%, #f8f4ff 
    Hub Page - Portal Cards
 ═══════════════════════════════════════════ */
 .portal-section {
-  padding: 80px 24px 100px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 48px;
+  padding: 80px 0 100px;
 }
 
 .portal-cards {
@@ -1338,8 +1334,7 @@ html.light .page-hero { background: linear-gradient(160deg, #f0f0fa 0%, #f8f4ff 
   gap: 28px;
   justify-content: center;
   flex-wrap: wrap;
-  width: 100%;
-  max-width: 1100px;
+  margin-top: 48px;
 }
 
 .portal-card {
