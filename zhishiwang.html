@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>《知識王 LIVE》深度解析</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    .detail-grid { display: flex; flex-direction: column; gap: 48px; margin-top: 60px; }
+    .detail-block { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r); padding: 40px; }
+    .detail-header { display: flex; align-items: center; gap: 20px; margin-bottom: 32px; border-bottom: 1px solid var(--border); padding-bottom: 20px; }
+    .detail-num { width: 40px; height: 40px; background: var(--c1); color: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 900; }
+  </style>
+</head>
+<body>
+  <div id="progress-bar"></div>
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html">🏠 返回首頁</a>
+      <div style="margin-left: auto; display: flex; align-items: center; gap: 16px;">
+        <button id="themeToggle">🌙</button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="section" style="padding-top: 140px;">
+    <div class="container">
+      <div class="section-label label-1">Game 01</div>
+      <h2 class="section-title">知識王 <span class="c1">LIVE</span></h2>
+      <p class="section-desc">全台最火熱的大腦競技場，由台灣獨立開發商 BRAVE KNIGHT 研發，累積下載超過 70 萬次。</p>
+
+      <div class="detail-grid">
+        <!-- 區塊 1 -->
+        <div class="detail-block reveal">
+          <div class="detail-header">
+            <div class="detail-num">01</div>
+            <h3 style="font-size: 1.5rem; font-weight: 800;">遊戲介紹</h3>
+          </div>
+          <div class="info-grid">
+            <div class="info-card">🏢 <strong>開發商：</strong>BRAVE KNIGHT，台灣本土開發團隊。</div>
+            <div class="info-card">📱 <strong>平台：</strong>iOS、Android 以及 PC 版 (Google Play Games)。</div>
+            <div class="info-card">🎓 <strong>對象：</strong>全年齡層，特別深受國小至國中生喜愛。</div>
+            <div class="info-card">💰 <strong>模式：</strong>免費下載遊玩，內含虛擬金幣與道具購買。</div>
+            <div class="info-card">🏆 <strong>榮譽：</strong>曾蟬聯 App Store 遊戲類下載榜首。</div>
+            <div class="info-card">🌏 <strong>文化：</strong>內容針對台灣在地文化進行高度本土化。</div>
+          </div>
+        </div>
+
+        <!-- 區塊 2 -->
+        <div class="detail-block reveal">
+          <div class="detail-header">
+            <div class="detail-num">02</div>
+            <h3 style="font-size: 1.5rem; font-weight: 800;">核心玩法</h3>
+          </div>
+          <div class="steps-list">
+            <div class="step">
+              <div class="step-num c1-bg">01</div>
+              <div class="step-body">
+                <h3>⚡ 競技性與即時感</h3>
+                <p>遊戲核心圍繞在「眼明手快」的加分機制。每題限時 10 秒，答對機率越高且速度越快，獲得的金幣加成與分數就越高，極具挑戰性。</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num c1-bg">02</div>
+              <div class="step-body">
+                <h3>📚 跨領域多元知識</h3>
+                <p>題庫涵蓋理科、文科、藝文、流行、娛樂、生活等 6 大領域，數萬題隨機出現，讓玩家在競技之餘能廣泛吸收生活科普知識。</p>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num c1-bg">03</div>
+              <div class="step-body">
+                <h3>🔄 即時對戰與媒合</h3>
+                <p>具備強大的線上即時配對系統，使用者可與全台各地的玩家同時對抗，系統會自動匹配實力相近的對手，增加獲勝的成就感。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 區塊 3 -->
+        <div class="detail-block reveal">
+          <div class="detail-header">
+            <div class="detail-num">03</div>
+            <h3 style="font-size: 1.5rem; font-weight: 800;">遊戲模式</h3>
+          </div>
+          <div class="modes-grid">
+            <div class="mode-card border-1">
+              <div class="mode-icon">🗺️</div>
+              <h3>城市闖關模式</h3>
+              <p>由台北出發環遊世界，挑戰各地區特色關主。每個城市都有獨特的參賽金幣與獎勵，玩家需不斷獲勝才能解鎖更高難度的國外城市。</p>
+            </div>
+            <div class="mode-card border-1">
+              <div class="mode-icon">👥</div>
+              <h3>好友對戰模式</h3>
+              <p>透過輸入專屬房間號碼或發送好友邀請，即可進行 1 對 1 的知識較量。此模式不計入全域排名，非常適合社群互動與班級競賽。</p>
+            </div>
+            <div class="mode-card border-1">
+              <div class="mode-icon">🎤</div>
+              <h3>主持模式</h3>
+              <p>專為聚會設計，一人擔任主持人出題，其他人透過掃碼或加入房間參與。適合大型活動或課堂教學中使用，提升參與感。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 底部導航 -->
+      <div style="margin-top: 80px; padding-top: 40px; border-top: 1px solid var(--border);">
+        <h3 style="margin-bottom: 24px; font-weight: 800;">接下來可以看...</h3>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+          <a href="kahoot.html" class="portal-card card-2" style="flex: 1; min-width: 280px; padding: 30px;">
+            <span style="font-size: 2rem; display: block; margin-bottom: 10px;">🟪</span>
+            <h4 style="font-weight: 800;">《Kahoot!》深度解析 →</h4>
+          </a>
+          <a href="compare.html" class="portal-card card-3" style="flex: 1; min-width: 280px; padding: 30px;">
+            <span style="font-size: 2rem; display: block; margin-bottom: 10px;">⚖️</span>
+            <h4 style="font-weight: 800;">產品綜合比較與篩選 →</h4>
+          </a>
+        </div>
+        <div style="margin-top: 40px; text-align: center;">
+          <a href="index.html" class="btn-submit" style="display: inline-block; padding: 12px 40px;">🏠 返回首頁</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container"><p>使用者介面設計與評鑑 · 第二次作業</p></div>
+  </footer>
+  <button id="backTop">↑</button>
+  <script src="script.js"></script>
+</body>
+</html>

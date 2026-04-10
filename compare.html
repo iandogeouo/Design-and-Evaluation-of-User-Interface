@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>產品綜合比較與篩選</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    /* 頂部控制列 */
+    .top-filter-bar {
+      margin-top: 120px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 24px;
+      margin-bottom: 40px;
+    }
+    .filter-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+    .filter-btn {
+      display: flex; align-items: center; gap: 10px; padding: 10px 20px;
+      border-radius: 100px; background: var(--bg-hover); border: 1px solid var(--border);
+      cursor: pointer; transition: all 0.3s var(--ease); color: var(--muted); font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .filter-btn.active { border-color: var(--c3); color: var(--text); background: rgba(0,212,200,0.1); }
+    .filter-btn::before {
+      content: ""; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--muted); opacity: 0.4; transition: all 0.3s;
+    }
+    .filter-btn.active::before { background: var(--c3); opacity: 1; box-shadow: 0 0 8px var(--c3); }
+    .filter-btn input { display: none; }
+
+    /* 中段佈局：雷達圖與表格並排 */
+    .mid-section {
+      display: grid;
+      grid-template-columns: 450px 1fr;
+      gap: 40px;
+      margin-bottom: 60px;
+      align-items: center;
+    }
+    .chart-box-mid {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 30px;
+      height: 450px;
+    }
+
+    /* 底段佈局：全寬度卡片 */
+    .bottom-section {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      width: 100%;
+    }
+    .note-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r);
+      overflow: hidden;
+      width: 100%;
+    }
+    .note-header { padding: 18px; background: rgba(255,255,255,0.02); border-bottom: 1px solid var(--border); text-align: center; }
+    .note-header h3 { font-size: 1.2rem; font-weight: 800; color: var(--c3); }
+    .note-body { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+    .note-game { padding: 32px; }
+    .note-g1 { border-right: 1px solid var(--border); background: rgba(33,150,243,0.01); }
+    .note-g2 { background: rgba(156,77,255,0.01); }
+    .game-label { font-size: 0.75rem; font-weight: 900; margin-bottom: 12px; display: block; }
+    .label-g1 { color: var(--c1); }
+    .label-g2 { color: var(--c2); }
+    .note-game p { font-size: 1rem; line-height: 1.7; color: var(--muted); }
+
+    .conclusion-box {
+      margin-top: 60px; padding: 40px; background: var(--bg-card);
+      border-radius: var(--r); border: 1px solid var(--border);
+      width: 100%;
+    }
+
+    @media (max-width: 1000px) {
+      .mid-section { grid-template-columns: 1fr; }
+      .note-body { grid-template-columns: 1fr; }
+      .note-g1 { border-right: none; border-bottom: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+  <div id="progress-bar"></div>
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a class="nav-logo" href="index.html">🏠 返回首頁</a>
+      <div style="margin-left: auto;"><button id="themeToggle">🌙</button></div>
+    </div>
+  </nav>
+
+  <section class="section">
+    <div class="container">
+      
+      <!-- 頂部篩選 -->
+      <div class="top-filter-bar reveal">
+        <h3 style="text-align:center; margin-bottom:20px; font-weight:800; font-size:1.1rem;">比較維度控制面板</h3>
+        <div class="filter-grid" id="filterOptions">
+          <label class="filter-btn active" data-row="usability"><input type="checkbox" checked> 🖐️ 易用性</label>
+          <label class="filter-btn active" data-row="efficiency"><input type="checkbox" checked> ⚡ 效率</label>
+          <label class="filter-btn active" data-row="learnability"><input type="checkbox" checked> 📖 學習性</label>
+          <label class="filter-btn active" data-row="memorability"><input type="checkbox" checked> 🧠 記憶性</label>
+          <label class="filter-btn active" data-row="satisfaction"><input type="checkbox" checked> 😊 滿意度</label>
+          <label class="filter-btn active" data-row="functionality"><input type="checkbox" checked> ⚙️ 功能性</label>
+          <label class="filter-btn active" data-row="safety"><input type="checkbox" checked> 🔒 安全性</label>
+          <button class="btn-submit" id="selectAllBtn" style="padding: 10px 20px; font-size: 0.8rem; border-radius: 100px; margin-left: 10px;">還原全部</button>
+        </div>
+      </div>
+
+      <h2 class="section-title text-center">數據<span class="c3">可視化分析</span></h2>
+
+      <!-- 中段：雷達圖 + 評分表 -->
+      <div class="mid-section">
+        <div class="chart-box-mid reveal">
+          <canvas id="radarChartComp"></canvas>
+        </div>
+        <div class="score-table-wrap reveal">
+          <table class="score-table">
+            <thead>
+              <tr>
+                <th style="width: 30%;">評估維度</th>
+                <th style="text-align: center; color: var(--c1);">知識王 LIVE</th>
+                <th style="text-align: center; color: var(--c2);">Kahoot!</th>
+              </tr>
+            </thead>
+            <tbody id="matrixBody">
+              <tr data-row="usability"><td><b>易用性</b></td><td><div class="bar-wrap"><div class="bar bar-1" data-w="70"></div></div><span>7.0</span></td><td><div class="bar-wrap"><div class="bar bar-2" data-w="90"></div></div><span>9.0</span></td></tr>
+              <tr data-row="efficiency"><td><b>效率</b></td><td><div class="bar-wrap"><div class="bar bar-1" data-w="80"></div></div><span>8.0</span></td><td><div class="bar-wrap"><div class="bar bar-2" data-w="80"></div></div><span>8.0</span></td></tr>
+              <tr data-row="learnability"><td><b>學習性</b></td><td><div class="bar-wrap"><div class="bar bar-1" data-w="70"></div></div><span>7.0</span></td><td><div class="bar-wrap"><div class="bar bar-2" data-w="90"></div></div><span>9.0</span></td></tr>
+              <tr data-row="memorability"><td><b>記憶性</b></td><td><div class="bar-wrap"><div class="bar bar-1" data-w="65"></div></div><span>6.5</span></td><td><div class="bar-wrap"><div class="bar bar-2" data-w="80"></div></div><span>8.0</span></td></tr>
+              <tr data-row="satisfaction"><td><b>滿意度</b></td><td><div class="bar-wrap"><div class="bar bar-1" data-w="80"></div></div><span>8.0</span></td><td><div class="bar-wrap"><div class="bar bar-2" data-w="85"></div></div><span>8.5</span></td></tr>
+              <tr data-row="functionality"><td><b>功能性</b></td><td><div class="bar-wrap"><div class="bar bar-1" data-w="75"></div></div><span>7.5</span></td><td><div class="bar-wrap"><div class="bar bar-2" data-w="90"></div></div><span>9.0</span></td></tr>
+              <tr data-row="safety"><td><b>安全性</b></td><td><div class="bar-wrap"><div class="bar bar-1" data-w="65"></div></div><span>6.5</span></td><td><div class="bar-wrap"><div class="bar bar-2" data-w="85"></div></div><span>8.5</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <h2 class="section-title text-center">深度<span class="c3">分項對比</span></h2>
+
+      <!-- 底段：佔滿寬度的詳細卡片 -->
+      <div class="bottom-section" id="detailSection"></div>
+
+      <!-- 底部結論 -->
+      <div class="conclusion-box reveal">
+        <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 24px; text-align: center;">結論：哪一個適合您？</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+          <div>
+            <h4 style="color: var(--c1); font-weight: 800; margin-bottom: 12px;">適合選擇《知識王 LIVE》：</h4>
+            <ul style="color: var(--muted); font-size: 0.95rem; line-height: 1.7; list-style: disc; padding-left: 20px;">
+              <li>喜歡 RPG 成長系統與收集獎勵的玩家。</li>
+              <li>偏好與不認識的對手進行即時隨機 PK。</li>
+              <li>希望在遊戲中吸收各種生活與在地科普知識。</li>
+            </ul>
+          </div>
+          <div>
+            <h4 style="color: var(--c2); font-weight: 800; margin-bottom: 12px;">適合選擇《Kahoot!》：</h4>
+            <ul style="color: var(--muted); font-size: 0.95rem; line-height: 1.7; list-style: disc; padding-left: 20px;">
+              <li>教師、企業講師或活動主持人。</li>
+              <li>需要進行課後分析與學習數據追蹤。</li>
+              <li>追求極致簡便、免註冊即可快速加入的體驗。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+  <script>
+    const comparisonDetails = {
+      usability: { title: '易用性', g1: '需先下載 App，初次啟動流程較長。主介面選項繁多，新玩家需幾分鐘適應。', g2: '極致精簡，輸入 PIN 碼即可進入，四色大按鈕讓小孩也能直覺操作。' },
+      efficiency: { title: '效率', g1: '強大即時配對系統，對戰節奏極快。每局結算瞬間完成。', g2: '網頁與行動端同步率極高，主持人切換題目後瞬間更新。' },
+      learnability: { title: '學習性', g1: '基本搶答模式一秒上手，但進階功能需閱讀說明。', g2: '幾乎零學習曲線。教師端引導完善，出題異常簡單。' },
+      memorability: { title: '記憶性', g1: '模式較多且介面深層，長久未遊玩需重新回憶功能位置。', g2: '核心操作永遠是那四種顏色，視覺記憶極強，不易遺忘。' },
+      satisfaction: { title: '滿意度', g1: '成就感來自成長與排名，對於熱衷競爭的玩家吸引力大。', g2: '現場氣氛營造神器。動感 BGM 能讓課堂氣氛瞬間沸騰。' },
+      functionality: { title: '功能性', g1: '專注益智競技，題庫豐富。但學習數據追蹤功能較薄弱。', g2: '橫跨教育與企業。具備詳盡報告，能精準分析知識盲點。' },
+      safety: { title: '安全性', g1: '官方審核題庫安全。但內購機制對兒童使用需適度監督。', g2: '符合國際資安標準。不需註冊即可參與，保護隱私。' }
+    };
+
+    function renderDetails() {
+      const container = document.getElementById('detailSection');
+      container.innerHTML = '';
+      Object.keys(comparisonDetails).forEach(key => {
+        const row = document.querySelector(`tr[data-row="${key}"]`);
+        if (row && row.style.display !== 'none') {
+          const item = comparisonDetails[key];
+          const card = document.createElement('div');
+          card.className = 'note-card reveal visible';
+          card.innerHTML = `<div class="note-header"><h3>${item.title}</h3></div><div class="note-body">
+            <div class="note-game note-g1"><span class="game-label label-g1">知識王 LIVE</span><p>${item.g1}</p></div>
+            <div class="note-game note-g2"><span class="game-label label-g2">Kahoot!</span><p>${item.g2}</p></div>
+          </div>`;
+          container.appendChild(card);
+        }
+      });
+    }
+
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const cb = btn.querySelector('input');
+        cb.checked = !cb.checked;
+        btn.classList.toggle('active', cb.checked);
+        const row = document.querySelector(`tr[data-row="${btn.dataset.row}"]`);
+        if(row) row.style.display = cb.checked ? '' : 'none';
+        renderDetails();
+        updateChart();
+      });
+    });
+
+    document.getElementById('selectAllBtn').addEventListener('click', () => {
+      filterBtns.forEach(btn => {
+        btn.classList.add('active');
+        btn.querySelector('input').checked = true;
+        document.querySelector(`tr[data-row="${btn.dataset.row}"]`).style.display = '';
+      });
+      renderDetails();
+      updateChart();
+    });
+
+    let myRadar;
+    window.onload = () => {
+      const ctx = document.getElementById('radarChartComp');
+      myRadar = new Chart(ctx, {
+        type: 'radar',
+        data: {
+          labels: ['易用性', '效率', '學習性', '記憶性', '滿意度', '功能性', '安全性'],
+          datasets: [
+            { label: '知識王 LIVE', data: [7,8,7,6.5,8,7.5,6.5], borderColor: '#2196f3', backgroundColor: 'rgba(33,150,243,0.1)', borderWidth: 3 },
+            { label: 'Kahoot!', data: [9,8,9,8,8.5,9,8.5], borderColor: '#9c4dff', backgroundColor: 'rgba(156,77,255,0.1)', borderWidth: 3 }
+          ]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          scales: { r: { min: 0, max: 10, ticks: { display: false }, grid: { color: 'rgba(255,255,255,0.05)' }, angleLines: { color: 'rgba(255,255,255,0.05)' } } },
+          plugins: { legend: { position: 'bottom' } }
+        }
+      });
+      renderDetails();
+    };
+
+    function updateChart() {
+      const activeKeys = Array.from(filterBtns).filter(b => b.classList.contains('active')).map(b => b.dataset.row);
+      const indices = activeKeys.map(k => Object.keys(comparisonDetails).indexOf(k));
+      myRadar.data.labels = activeKeys.map(k => comparisonDetails[k].title);
+      myRadar.data.datasets[0].data = indices.map(i => [7,8,7,6.5,8,7.5,6.5][i]);
+      myRadar.data.datasets[1].data = indices.map(i => [9,8,9,8,8.5,9,8.5][i]);
+      myRadar.update();
+    }
+  </script>
+</body>
+</html>
