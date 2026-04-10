@@ -1270,3 +1270,464 @@ html.light .font-ctrl { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0
   .info-grid { grid-template-columns: 1fr; }
   .section-title { font-size: 1.8rem; }
 }
+
+/* ═══════════════════════════════════════════
+   導覽列：返回主頁按鈕（子頁面）
+═══════════════════════════════════════════ */
+.nav-home-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  background: linear-gradient(135deg, var(--c1), var(--c2));
+  color: #fff;
+  border-radius: var(--r-sm);
+  font-weight: 700;
+  font-size: .88rem;
+  text-decoration: none;
+  transition: opacity var(--t), transform var(--t);
+  white-space: nowrap;
+}
+.nav-home-btn:hover { opacity: .85; transform: translateY(-1px); }
+
+/* ═══════════════════════════════════════════
+   子頁面 Hero
+═══════════════════════════════════════════ */
+.page-hero {
+  padding: calc(var(--nav-h) + 48px) 24px 48px;
+  background: linear-gradient(160deg, var(--bg) 0%, var(--bg2) 100%);
+  border-bottom: 1px solid var(--border);
+}
+.breadcrumb {
+  display: inline-block;
+  color: var(--muted);
+  font-size: .85rem;
+  margin-bottom: 16px;
+  text-decoration: none;
+  transition: color var(--t);
+}
+.breadcrumb:hover { color: var(--text); }
+.page-hero-title {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 900;
+  letter-spacing: -.02em;
+  margin-bottom: 16px;
+  line-height: 1.15;
+}
+.page-hero-sub {
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 680px;
+}
+
+html.light .page-hero { background: linear-gradient(160deg, #f0f0fa 0%, #f8f4ff 100%); }
+
+/* ═══════════════════════════════════════════
+   Hub Page - Portal Cards
+═══════════════════════════════════════════ */
+.portal-section {
+  padding: 80px 24px 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+}
+
+.portal-cards {
+  display: flex;
+  gap: 28px;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1100px;
+}
+
+.portal-card {
+  flex: 1;
+  min-width: 240px;
+  max-width: 340px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 40px 28px;
+  text-align: center;
+  text-decoration: none;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  transition: transform var(--t) var(--ease), border-color var(--t) var(--ease), box-shadow var(--t) var(--ease);
+}
+.portal-card:hover { transform: translateY(-6px); border-color: var(--border-hi); box-shadow: 0 20px 56px rgba(0,0,0,0.4); }
+.portal-card.card-1:hover { border-color: var(--c1); box-shadow: 0 20px 56px var(--c1-glow); }
+.portal-card.card-2:hover { border-color: var(--c2); box-shadow: 0 20px 56px var(--c2-glow); }
+.portal-card.card-3:hover { border-color: var(--c3); box-shadow: 0 20px 56px rgba(0,212,200,0.2); }
+.portal-card .card-icon { font-size: 3rem; line-height: 1; }
+.portal-card h3 { font-size: 1.15rem; font-weight: 700; line-height: 1.45; }
+.portal-card p { font-size: .85rem; color: var(--muted); line-height: 1.6; }
+.portal-card .card-arrow { margin-top: 4px; font-size: .85rem; color: var(--muted); transition: color var(--t); }
+.portal-card:hover .card-arrow { color: var(--text); }
+
+/* ═══════════════════════════════════════════
+   Q&A Section
+═══════════════════════════════════════════ */
+.qa-section {
+  padding: 80px 24px;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+}
+.qa-wrap { max-width: 760px; margin: 0 auto; }
+
+/* Confirmation Modal */
+.confirm-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.72);
+  backdrop-filter: blur(8px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--t);
+}
+.confirm-modal-overlay.is-open { opacity: 1; pointer-events: all; }
+.confirm-modal {
+  background: var(--bg2);
+  border: 1px solid var(--border-hi);
+  border-radius: var(--r);
+  padding: 44px 40px;
+  max-width: 440px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+}
+.confirm-modal h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 12px; }
+.confirm-modal p { color: var(--muted); margin-bottom: 28px; font-size: .88rem; word-break: break-all; }
+.confirm-btns { display: flex; gap: 12px; justify-content: center; }
+.confirm-btn-yes {
+  padding: 10px 28px;
+  background: linear-gradient(135deg, var(--c1), var(--c2));
+  color: #fff; border: none;
+  border-radius: var(--r-sm);
+  font-weight: 700; font-size: .9rem;
+  cursor: pointer; font-family: inherit;
+  transition: opacity var(--t), transform var(--t);
+}
+.confirm-btn-yes:hover { opacity: .85; transform: translateY(-1px); }
+.confirm-btn-no {
+  padding: 10px 28px;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  font-weight: 600; font-size: .9rem;
+  cursor: pointer; font-family: inherit;
+  transition: border-color var(--t), color var(--t);
+}
+.confirm-btn-no:hover { border-color: var(--border-hi); color: var(--text); }
+
+html.light .confirm-modal { background: #fff; }
+
+/* ═══════════════════════════════════════════
+   Accordion (手風琴)
+═══════════════════════════════════════════ */
+.accordion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+details.accordion-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+  transition: border-color var(--t);
+}
+details.accordion-item[open] { border-color: var(--border-hi); }
+
+details.accordion-item summary {
+  list-style: none;
+  padding: 20px 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-weight: 600;
+  font-size: 1rem;
+  user-select: none;
+}
+details.accordion-item summary::-webkit-details-marker { display: none; }
+
+.accordion-icon { font-size: 1.3rem; flex-shrink: 0; }
+.accordion-title { flex: 1; }
+.accordion-arrow {
+  flex-shrink: 0;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--bg-hover);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .7rem;
+  transition: transform var(--t) var(--ease);
+}
+details.accordion-item[open] .accordion-arrow { transform: rotate(180deg); }
+
+.accordion-body {
+  padding: 0 24px 24px;
+  border-top: 1px solid var(--border);
+}
+.accordion-body .info-grid,
+.accordion-body .steps-list,
+.accordion-body .modes-grid { margin-top: 20px; }
+
+/* ═══════════════════════════════════════════
+   Recirculation（接下來可以看...）
+═══════════════════════════════════════════ */
+.recirculation {
+  padding: 72px 24px;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+.recirculation h2 { font-size: 1.6rem; font-weight: 700; margin-bottom: 32px; }
+.recirc-cards {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+.recirc-card {
+  flex: 1;
+  min-width: 200px;
+  max-width: 280px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px 20px;
+  text-decoration: none;
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  transition: transform var(--t), border-color var(--t), box-shadow var(--t);
+}
+.recirc-card:hover { transform: translateY(-4px); border-color: var(--border-hi); box-shadow: 0 12px 32px rgba(0,0,0,0.3); }
+.recirc-card .recirc-icon { font-size: 2.4rem; line-height: 1; }
+.recirc-card h3 { font-size: 1rem; font-weight: 700; }
+.recirc-card p { font-size: .82rem; color: var(--muted); }
+
+.btn-home {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 36px;
+  background: linear-gradient(135deg, var(--c1), var(--c2));
+  color: #fff;
+  border-radius: var(--r-sm);
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: opacity var(--t), transform var(--t);
+}
+.btn-home:hover { opacity: .85; transform: translateY(-2px); }
+
+/* ═══════════════════════════════════════════
+   Compare Page - Sidebar Layout
+═══════════════════════════════════════════ */
+.compare-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  align-items: flex-start;
+}
+@media (min-width: 768px) {
+  .compare-layout { flex-direction: row; align-items: flex-start; }
+}
+
+.filter-sidebar {
+  width: 100%;
+  flex-shrink: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 24px;
+  position: sticky;
+  top: calc(var(--nav-h) + 16px);
+}
+@media (min-width: 768px) { .filter-sidebar { width: 200px; } }
+
+.filter-sidebar h3 { font-size: 1rem; font-weight: 700; margin-bottom: 16px; }
+
+.btn-select-all {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: var(--r-sm);
+  background: linear-gradient(135deg, var(--c1), var(--c2));
+  color: #fff;
+  font-weight: 600;
+  font-size: .85rem;
+  margin-bottom: 14px;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  transition: opacity var(--t);
+}
+.btn-select-all:hover { opacity: .85; }
+
+.filter-list { display: flex; flex-direction: column; gap: 6px; }
+
+.filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: var(--r-sm);
+  background: var(--bg-hover);
+  border: 1px solid transparent;
+  color: var(--text);
+  font-size: .88rem;
+  font-family: inherit;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: background var(--t), border-color var(--t);
+}
+.filter-btn.active { border-color: var(--c1); background: rgba(33,150,243,0.1); }
+.filter-btn:hover { opacity: .85; }
+
+.filter-check {
+  width: 18px; height: 18px;
+  border-radius: 4px;
+  border: 2px solid var(--border-hi);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .7rem;
+  flex-shrink: 0;
+  transition: background var(--t), border-color var(--t);
+}
+.filter-btn.active .filter-check { background: var(--c1); border-color: var(--c1); color: #fff; }
+
+.compare-main { flex: 1; min-width: 0; }
+
+/* 隱藏被篩掉的行 */
+.score-table tbody tr.hidden-row { display: none; }
+.analysis-notes .note-card.hidden-row { display: none; }
+
+/* ═══════════════════════════════════════════
+   Content Block（子頁面平鋪區塊）
+═══════════════════════════════════════════ */
+.content-block {
+  margin-bottom: 60px;
+}
+.content-block:last-child { margin-bottom: 0; }
+
+.block-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.block-icon { font-size: 1.3rem; }
+
+/* ═══════════════════════════════════════════
+   Compare Page - 水平篩選列
+═══════════════════════════════════════════ */
+.filter-row-wrap {
+  margin-bottom: 32px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 16px 20px;
+}
+
+.filter-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filter-row-label {
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.filter-btns-h {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  flex: 1;
+}
+
+.filter-btn-h {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--bg-hover);
+  color: var(--muted);
+  font-size: .82rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background var(--t), border-color var(--t), color var(--t);
+  white-space: nowrap;
+}
+.filter-btn-h.active {
+  background: rgba(33,150,243,0.15);
+  border-color: var(--c1);
+  color: var(--text);
+  font-weight: 600;
+}
+.filter-btn-h:hover { border-color: var(--border-hi); }
+
+.btn-select-all-h {
+  padding: 6px 16px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, var(--c1), var(--c2));
+  color: #fff;
+  font-size: .82rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: opacity var(--t);
+}
+.btn-select-all-h:hover { opacity: .85; }
+
+/* ═══════════════════════════════════════════
+   Compare Page - 雷達圖 + 評分表 並排
+═══════════════════════════════════════════ */
+.compare-vis-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  align-items: flex-start;
+}
+
+@media (min-width: 860px) {
+  .compare-vis-grid {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .compare-vis-grid .chart-box {
+    width: 340px;
+    flex-shrink: 0;
+  }
+  .compare-vis-grid .score-table-wrap {
+    flex: 1;
+    min-width: 0;
+  }
+}

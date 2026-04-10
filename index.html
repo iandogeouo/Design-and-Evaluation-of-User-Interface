@@ -3,60 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>數位教育指南：知識王 LIVE × Kahoot!</title>
+  <title>數位教育指南：知識王 vs Kahoot!</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
-  <style>
-    /* 為了配合 Star Hub 結構，微調 portal 卡片的樣式 */
-    .portal-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      margin-top: 60px;
-      width: 100%;
-    }
-    @media (max-width: 900px) {
-      .portal-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-    .portal-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      padding: 30px 20px;
-      text-align: center;
-      transition: all var(--t) var(--ease);
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-    .portal-card:hover {
-      transform: translateY(-8px);
-      border-color: var(--c1);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px var(--c1-glow);
-    }
-    .portal-card.card-2:hover { border-color: var(--c2); box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px var(--c2-glow); }
-    .portal-card.card-3:hover { border-color: var(--c3); box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(0,212,200,0.2); }
-    
-    .portal-icon { font-size: 3.5rem; margin-bottom: 24px; display: block; }
-    .portal-card h2 { font-size: 1.5rem; margin-bottom: 16px; font-weight: 800; }
-    .portal-card p { color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
-    .portal-link {
-      margin-top: 24px;
-      display: inline-block;
-      font-weight: 700;
-      color: var(--c1);
-      transition: all 0.3s;
-    }
-    .card-2 .portal-link { color: var(--c2); }
-    .card-3 .portal-link { color: var(--c3); }
-    .portal-card:hover .portal-link { letter-spacing: 0.1em; }
-  </style>
 </head>
 <body>
 
@@ -66,80 +15,123 @@
   <!-- ── 導覽列 ── -->
   <nav id="navbar">
     <div class="nav-inner">
-      <a class="nav-logo" href="index.html">🏠 返回首頁</a>
-      <div style="margin-left: auto; display: flex; align-items: center; gap: 16px;">
-        <div class="font-ctrl">
-          <button id="fontDecrease" title="縮小字體">A−</button>
-          <button id="fontIncrease" title="放大字體">A+</button>
-        </div>
-        <button id="themeToggle" title="切換主題">🌙</button>
+      <a class="nav-logo" href="#hero">🏠 數位教育指南</a>
+      <div style="flex:1"></div>
+      <div class="font-ctrl">
+        <button id="fontDecrease" title="縮小字體 (Shift+−)" aria-label="縮小字體">A−</button>
+        <button id="fontReset"    title="重設字體 (Shift+0)" aria-label="重設字體">A</button>
+        <button id="fontIncrease" title="放大字體 (Shift++)" aria-label="放大字體">A+</button>
       </div>
+      <button id="themeToggle" title="切換主題 (Shift+D)" aria-label="切換主題">🌙</button>
     </div>
   </nav>
 
   <!-- ── Hero ── -->
-  <section id="hero" style="min-height: 90vh;">
+  <section id="hero">
     <div class="hero-shapes" aria-hidden="true">
-      <div class="shape s1"></div>
-      <div class="shape s2"></div>
-      <div class="shape s3"></div>
-      <div class="shape s4"></div>
+      <div class="shape s1"></div><div class="shape s2"></div>
+      <div class="shape s3"></div><div class="shape s4"></div>
     </div>
-    <div class="hero-content" style="max-width: 1000px;">
-      <p class="hero-eyebrow">數位教育指南 · 知識王 vs Kahoot!</p>
-      <h1 class="hero-title"><span id="typewriterEl"></span></h1>
-      <p class="hero-sub">深度解析兩大益智學習平台，助您為學習者挑選最合適的互動工具。</p>
-      
-      <!-- Portal Cards (The Spokes) -->
-      <div class="portal-grid">
-        <a href="zhishiwang.html" class="portal-card card-1 reveal">
-          <span class="portal-icon">🎮</span>
-          <h2>《知識王 LIVE》深度解析</h2>
-          <p>了解台灣在地開發的益智競技遊戲，探索其豐富的題庫與對戰機制。</p>
-          <span class="portal-link">進入探索 →</span>
-        </a>
-        
-        <a href="kahoot.html" class="portal-card card-2 reveal">
-          <span class="portal-icon">🟪</span>
-          <h2>《Kahoot!》深度解析</h2>
-          <p>探索全球領先的遊戲化學習平台，分析其在教育現場的應用與優勢。</p>
-          <span class="portal-link">進入探索 →</span>
-        </a>
-        
-        <a href="compare.html" class="portal-card card-3 reveal">
-          <span class="portal-icon">⚖️</span>
-          <h2>產品綜合比較與篩選</h2>
-          <p>從易用性、滿意度等七大維度，透過側邊欄篩選器進行精準對比。</p>
-          <span class="portal-link">進入對比 →</span>
-        </a>
+    <div class="hero-content">
+      <p class="hero-eyebrow">使用者介面設計與評鑑 · 第三次作業</p>
+      <h1 class="hero-title">數位教育指南：<br>知識王 <span class="c1">vs</span> <span class="c2">Kahoot!</span></h1>
+      <p class="hero-sub">深度解析兩款益智遊戲，幫你為孩子做出最好的選擇</p>
+      <div class="hero-badges">
+        <div class="badge badge-1">🎮 知識王 LIVE</div>
+        <div class="badge-vs">VS</div>
+        <div class="badge badge-2">🟪 Kahoot!</div>
       </div>
+      <a href="#portal" class="hero-cta">開始探索 <span class="cta-arrow">↓</span></a>
+    </div>
+  </section>
+
+  <!-- ── 入口卡片 ── -->
+  <section id="portal" class="portal-section">
+    <div class="container" style="text-align:center;">
+      <div class="section-label">導覽</div>
+      <h2 class="section-title">選擇你要<span class="c3">查看的內容</span></h2>
+      <p class="section-desc">點擊卡片深入了解各項目</p>
+    </div>
+    <div class="portal-cards">
+      <a href="zhishiwang.html" class="portal-card card-1 reveal">
+        <div class="card-icon">🎮</div>
+        <h3>《知識王 LIVE》<br>深度解析</h3>
+        <p>台灣本土益智競技平台，70 萬次下載，即時對戰體驗全面介紹</p>
+        <span class="card-arrow">查看詳情 →</span>
+      </a>
+      <a href="kahoot.html" class="portal-card card-2 reveal">
+        <div class="card-icon">🟪</div>
+        <h3>《Kahoot!》<br>深度解析</h3>
+        <p>全球 3 億用戶的遊戲化學習平台，課堂互動測驗首選</p>
+        <span class="card-arrow">查看詳情 →</span>
+      </a>
+      <a href="compare.html" class="portal-card card-3 reveal">
+        <div class="card-icon">⚖️</div>
+        <h3>產品綜合比較<br>與篩選</h3>
+        <p>七大維度全面比較，互動式篩選器幫你找出最適合的選擇</p>
+        <span class="card-arrow">查看比較 →</span>
+      </a>
     </div>
   </section>
 
   <!-- ── Q&A 表單 ── -->
-  <section id="support" class="section">
-    <div class="container">
-      <div class="contact-col reveal" style="max-width: 600px; margin: 0 auto; background: var(--bg-card); padding: 40px; border-radius: var(--r); border: 1px solid var(--border);">
-        <h2 class="section-title text-center" style="margin-bottom: 32px;">有任何疑問嗎？</h2>
+  <section id="qa" class="qa-section">
+    <div class="container qa-wrap">
+      <div class="section-label">諮詢</div>
+      <h2 class="section-title">問題<span class="c3">諮詢</span></h2>
+      <p class="section-desc">有任何關於兩款遊戲的問題？歡迎留言</p>
+
+      <!-- FAQ -->
+      <div class="faq-col reveal" style="margin-bottom:48px;">
+        <h3 class="sub-title">常見問題</h3>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-q">知識王 LIVE 可以在 PC 上玩嗎？<span class="faq-arrow">+</span></button>
+            <div class="faq-a">目前知識王 LIVE 沒有獨立 PC 版本，但可透過 Google Play Games（PC 版）在電腦上遊玩，使用同一 Google 帳號即可同步進度。</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Kahoot! 需要帳號才能參與嗎？<span class="faq-arrow">+</span></button>
+            <div class="faq-a">不需要！參與者只需輸入主持人提供的 Game PIN 碼，即可立即加入遊戲，無需建立帳號。</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">哪款遊戲比較適合課堂使用？<span class="faq-arrow">+</span></button>
+            <div class="faq-a">Kahoot! 更適合課堂使用。老師在大螢幕投影題目，學生用手機搶答，不需帳號即可加入，且提供完整的學習分析報告，讓老師即時掌握學生狀況。</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">知識王 LIVE 和 Kahoot! 都免費嗎？<span class="faq-arrow">+</span></button>
+            <div class="faq-a">兩款都有免費版本。知識王 LIVE 免費遊玩但有內建微課金選項；Kahoot! 有免費基本方案，進階功能（詳細分析、品牌設定）需訂閱 Premium 方案。</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 聯絡表單 -->
+      <div class="contact-col reveal">
+        <h3 class="sub-title">提問表單</h3>
         <form id="contactForm" novalidate>
           <div class="field-group">
-            <label for="fname">Email <span class="req">*</span></label>
+            <label for="fname">姓名 <span class="req">*</span></label>
+            <input type="text" id="fname" placeholder="請輸入姓名" />
+            <span class="field-err" id="fnameErr"></span>
+          </div>
+          <div class="field-group">
+            <label for="femail">Email <span class="req">*</span></label>
             <input type="email" id="femail" placeholder="example@email.com" />
             <span class="field-err" id="femailErr"></span>
           </div>
           <div class="field-group">
             <label for="fmsg">您的問題或建議</label>
-            <textarea id="fmsg" rows="4" placeholder="請描述您的疑問…"></textarea>
+            <textarea id="fmsg" rows="4" placeholder="請輸入內容…"></textarea>
           </div>
-          <button type="submit" class="btn-submit" style="width: 100%;">送出諮詢 →</button>
+          <button type="submit" class="btn-submit">送出 →</button>
         </form>
       </div>
     </div>
   </section>
 
+  <!-- ── Footer ── -->
   <footer>
     <div class="container">
-      <p>使用者介面設計與評鑑 · 第二次作業</p>
+      <p>使用者介面設計與評鑑 · 第三次作業</p>
       <p class="footer-sub">分析對象：知識王 LIVE · Kahoot!</p>
     </div>
   </footer>
@@ -147,6 +139,96 @@
   <!-- 返回頂部 -->
   <button id="backTop" aria-label="返回頂部">↑</button>
 
-  <script src="script.js"></script>
+  <!-- ── 確認送出 Modal ── -->
+  <div id="confirmOverlay" class="confirm-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="confirm-modal">
+      <h3>確認送出？</h3>
+      <p id="confirmSummary">請確認您的資料後再送出。</p>
+      <div class="confirm-btns">
+        <button class="confirm-btn-yes" id="confirmYes">確認送出</button>
+        <button class="confirm-btn-no"  id="confirmNo">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toastContainer"></div>
+  <script src="common.js"></script>
+  <script>
+    'use strict';
+
+    // ── 從 localStorage 讀回上次填的姓名
+    const nameInput  = document.getElementById('fname');
+    const emailInput = document.getElementById('femail');
+    const msgInput   = document.getElementById('fmsg');
+    const nameErr    = document.getElementById('fnameErr');
+    const emailErr   = document.getElementById('femailErr');
+    const form       = document.getElementById('contactForm');
+
+    const saved = localStorage.getItem('contactName');
+    if (saved) nameInput.value = saved;
+
+    function validateEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+    function showErr(input, errEl, msg) { input.classList.add('err'); errEl.textContent = '⚠ ' + msg; }
+    function clearErr(input, errEl) { input.classList.remove('err'); errEl.textContent = ''; }
+
+    nameInput.addEventListener('input',  () => { if (nameInput.value.trim()) clearErr(nameInput, nameErr); });
+    emailInput.addEventListener('input', () => {
+      if (!emailInput.value.trim() || validateEmail(emailInput.value.trim())) clearErr(emailInput, emailErr);
+    });
+
+    // ── 確認 Modal 邏輯 ──
+    const overlay    = document.getElementById('confirmOverlay');
+    const confirmYes = document.getElementById('confirmYes');
+    const confirmNo  = document.getElementById('confirmNo');
+    const summary    = document.getElementById('confirmSummary');
+
+    function openConfirm(name, email) {
+      summary.textContent = `姓名：${name}　Email：${email}`;
+      overlay.classList.add('is-open');
+      overlay.setAttribute('aria-hidden', 'false');
+    }
+    function closeConfirm() {
+      overlay.classList.remove('is-open');
+      overlay.setAttribute('aria-hidden', 'true');
+    }
+
+    confirmNo.addEventListener('click', closeConfirm);
+    overlay.addEventListener('click', e => { if (e.target === overlay) closeConfirm(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeConfirm(); });
+
+    // ── 表單驗證 → 開啟確認 Modal ──
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      let valid = true;
+
+      if (!nameInput.value.trim()) { showErr(nameInput, nameErr, '請填寫姓名'); valid = false; }
+      else clearErr(nameInput, nameErr);
+
+      const emailVal = emailInput.value.trim();
+      if (!emailVal) { showErr(emailInput, emailErr, '請填寫 Email'); valid = false; }
+      else if (!validateEmail(emailVal)) { showErr(emailInput, emailErr, '請確認 Email 格式（例：abc@gmail.com）'); valid = false; }
+      else clearErr(emailInput, emailErr);
+
+      if (valid) openConfirm(nameInput.value.trim(), emailVal);
+    });
+
+    // ── 確認後送出 ──
+    confirmYes.addEventListener('click', () => {
+      // 儲存姓名到 localStorage
+      localStorage.setItem('contactName', nameInput.value.trim());
+      // 快取完整表單內容
+      localStorage.setItem('lastForm', JSON.stringify({
+        name:  nameInput.value.trim(),
+        email: emailInput.value.trim(),
+        msg:   msgInput.value.trim(),
+        time:  new Date().toISOString()
+      }));
+      closeConfirm();
+      showToast('✅ 送出成功！感謝您的意見回饋。');
+      form.reset();
+      // 保留姓名快取
+      nameInput.value = localStorage.getItem('contactName') || '';
+    });
+  </script>
 </body>
 </html>

@@ -3,262 +3,435 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>產品綜合比較與篩選</title>
+  <title>產品綜合比較與篩選 — 數位教育指南</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-  <style>
-    /* 頂部控制列 */
-    .top-filter-bar {
-      margin-top: 120px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      padding: 24px;
-      margin-bottom: 40px;
-    }
-    .filter-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      justify-content: center;
-    }
-    .filter-btn {
-      display: flex; align-items: center; gap: 10px; padding: 10px 20px;
-      border-radius: 100px; background: var(--bg-hover); border: 1px solid var(--border);
-      cursor: pointer; transition: all 0.3s var(--ease); color: var(--muted); font-weight: 600;
-      font-size: 0.9rem;
-    }
-    .filter-btn.active { border-color: var(--c3); color: var(--text); background: rgba(0,212,200,0.1); }
-    .filter-btn::before {
-      content: ""; width: 6px; height: 6px; border-radius: 50%;
-      background: var(--muted); opacity: 0.4; transition: all 0.3s;
-    }
-    .filter-btn.active::before { background: var(--c3); opacity: 1; box-shadow: 0 0 8px var(--c3); }
-    .filter-btn input { display: none; }
-
-    /* 中段佈局：雷達圖與表格並排 */
-    .mid-section {
-      display: grid;
-      grid-template-columns: 450px 1fr;
-      gap: 40px;
-      margin-bottom: 60px;
-      align-items: center;
-    }
-    .chart-box-mid {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      padding: 30px;
-      height: 450px;
-    }
-
-    /* 底段佈局：全寬度卡片 */
-    .bottom-section {
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-      width: 100%;
-    }
-    .note-card {
-      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r);
-      overflow: hidden;
-      width: 100%;
-    }
-    .note-header { padding: 18px; background: rgba(255,255,255,0.02); border-bottom: 1px solid var(--border); text-align: center; }
-    .note-header h3 { font-size: 1.2rem; font-weight: 800; color: var(--c3); }
-    .note-body { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
-    .note-game { padding: 32px; }
-    .note-g1 { border-right: 1px solid var(--border); background: rgba(33,150,243,0.01); }
-    .note-g2 { background: rgba(156,77,255,0.01); }
-    .game-label { font-size: 0.75rem; font-weight: 900; margin-bottom: 12px; display: block; }
-    .label-g1 { color: var(--c1); }
-    .label-g2 { color: var(--c2); }
-    .note-game p { font-size: 1rem; line-height: 1.7; color: var(--muted); }
-
-    .conclusion-box {
-      margin-top: 60px; padding: 40px; background: var(--bg-card);
-      border-radius: var(--r); border: 1px solid var(--border);
-      width: 100%;
-    }
-
-    @media (max-width: 1000px) {
-      .mid-section { grid-template-columns: 1fr; }
-      .note-body { grid-template-columns: 1fr; }
-      .note-g1 { border-right: none; border-bottom: 1px solid var(--border); }
-    }
-  </style>
 </head>
 <body>
+
   <div id="progress-bar"></div>
+
   <nav id="navbar">
     <div class="nav-inner">
-      <a class="nav-logo" href="index.html">🏠 返回首頁</a>
-      <div style="margin-left: auto;"><button id="themeToggle">🌙</button></div>
+      <a class="nav-home-btn" href="index.html">🏠 返回主頁</a>
+      <div style="flex:1"></div>
+      <div class="font-ctrl">
+        <button id="fontDecrease" title="縮小字體 (Shift+−)" aria-label="縮小字體">A−</button>
+        <button id="fontReset"    title="重設字體 (Shift+0)" aria-label="重設字體">A</button>
+        <button id="fontIncrease" title="放大字體 (Shift++)" aria-label="放大字體">A+</button>
+      </div>
+      <button id="themeToggle" title="切換主題 (Shift+D)" aria-label="切換主題">🌙</button>
     </div>
   </nav>
 
+  <!-- Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <a href="index.html" class="breadcrumb">← 返回主頁</a>
+      <div class="section-label">分析</div>
+      <h1 class="page-hero-title">⚖️ 產品綜合<span class="c3">比較與篩選</span></h1>
+      <p class="page-hero-sub">從七大使用性維度全面比較兩款益智遊戲，勾選項目可即時更新雷達圖與評分表</p>
+    </div>
+  </section>
+
   <section class="section">
     <div class="container">
-      
-      <!-- 頂部篩選 -->
-      <div class="top-filter-bar reveal">
-        <h3 style="text-align:center; margin-bottom:20px; font-weight:800; font-size:1.1rem;">比較維度控制面板</h3>
-        <div class="filter-grid" id="filterOptions">
-          <label class="filter-btn active" data-row="usability"><input type="checkbox" checked> 🖐️ 易用性</label>
-          <label class="filter-btn active" data-row="efficiency"><input type="checkbox" checked> ⚡ 效率</label>
-          <label class="filter-btn active" data-row="learnability"><input type="checkbox" checked> 📖 學習性</label>
-          <label class="filter-btn active" data-row="memorability"><input type="checkbox" checked> 🧠 記憶性</label>
-          <label class="filter-btn active" data-row="satisfaction"><input type="checkbox" checked> 😊 滿意度</label>
-          <label class="filter-btn active" data-row="functionality"><input type="checkbox" checked> ⚙️ 功能性</label>
-          <label class="filter-btn active" data-row="safety"><input type="checkbox" checked> 🔒 安全性</label>
-          <button class="btn-submit" id="selectAllBtn" style="padding: 10px 20px; font-size: 0.8rem; border-radius: 100px; margin-left: 10px;">還原全部</button>
+
+      <!-- ① 篩選列（置頂） -->
+      <div class="filter-row-wrap reveal">
+        <div class="filter-row">
+          <span class="filter-row-label">選擇比較項目：</span>
+          <div class="filter-btns-h" id="filterList">
+            <button class="filter-btn-h active" data-name="易用性">✓ 易用性</button>
+            <button class="filter-btn-h active" data-name="效率">✓ 效率</button>
+            <button class="filter-btn-h active" data-name="學習性">✓ 學習性</button>
+            <button class="filter-btn-h active" data-name="記憶性">✓ 記憶性</button>
+            <button class="filter-btn-h active" data-name="滿意度">✓ 滿意度</button>
+            <button class="filter-btn-h active" data-name="功能性">✓ 功能性</button>
+            <button class="filter-btn-h active" data-name="安全性">✓ 安全性</button>
+          </div>
+          <button class="btn-select-all-h" id="btnSelectAll">一鍵全選</button>
         </div>
       </div>
 
-      <h2 class="section-title text-center">數據<span class="c3">可視化分析</span></h2>
+      <!-- ② 雷達圖 + 評分表 並排 -->
+      <div class="compare-vis-grid reveal">
 
-      <!-- 中段：雷達圖 + 評分表 -->
-      <div class="mid-section">
-        <div class="chart-box-mid reveal">
-          <canvas id="radarChartComp"></canvas>
+        <!-- 雷達圖 -->
+        <div class="chart-box">
+          <canvas id="radarChart"></canvas>
         </div>
-        <div class="score-table-wrap reveal">
+
+        <!-- 評分表 -->
+        <div class="score-table-wrap">
           <table class="score-table">
             <thead>
               <tr>
-                <th style="width: 30%;">評估維度</th>
-                <th style="text-align: center; color: var(--c1);">知識王 LIVE</th>
-                <th style="text-align: center; color: var(--c2);">Kahoot!</th>
+                <th class="th-criteria">
+                  評估項目
+                  <button id="undoPanel" disabled title="退回上一步 (Ctrl+Z / ⌘Z)">↩</button>
+                </th>
+                <th class="th-1">
+                  <div class="seg-ctrl" data-panel="a">
+                    <button class="seg-btn active" data-val="g1">🧠 知識王</button>
+                    <button class="seg-btn"        data-val="g2">🎯 Kahoot!</button>
+                  </div>
+                </th>
+                <th class="th-2">
+                  <div class="seg-ctrl" data-panel="b">
+                    <button class="seg-btn"        data-val="g1">🧠 知識王</button>
+                    <button class="seg-btn active" data-val="g2">🎯 Kahoot!</button>
+                  </div>
+                </th>
               </tr>
             </thead>
-            <tbody id="matrixBody">
-              <tr data-row="usability"><td><b>易用性</b></td><td><div class="bar-wrap"><div class="bar bar-1" data-w="70"></div></div><span>7.0</span></td><td><div class="bar-wrap"><div class="bar bar-2" data-w="90"></div></div><span>9.0</span></td></tr>
-              <tr data-row="efficiency"><td><b>效率</b></td><td><div class="bar-wrap"><div class="bar bar-1" data-w="80"></div></div><span>8.0</span></td><td><div class="bar-wrap"><div class="bar bar-2" data-w="80"></div></div><span>8.0</span></td></tr>
-              <tr data-row="learnability"><td><b>學習性</b></td><td><div class="bar-wrap"><div class="bar bar-1" data-w="70"></div></div><span>7.0</span></td><td><div class="bar-wrap"><div class="bar bar-2" data-w="90"></div></div><span>9.0</span></td></tr>
-              <tr data-row="memorability"><td><b>記憶性</b></td><td><div class="bar-wrap"><div class="bar bar-1" data-w="65"></div></div><span>6.5</span></td><td><div class="bar-wrap"><div class="bar bar-2" data-w="80"></div></div><span>8.0</span></td></tr>
-              <tr data-row="satisfaction"><td><b>滿意度</b></td><td><div class="bar-wrap"><div class="bar bar-1" data-w="80"></div></div><span>8.0</span></td><td><div class="bar-wrap"><div class="bar bar-2" data-w="85"></div></div><span>8.5</span></td></tr>
-              <tr data-row="functionality"><td><b>功能性</b></td><td><div class="bar-wrap"><div class="bar bar-1" data-w="75"></div></div><span>7.5</span></td><td><div class="bar-wrap"><div class="bar bar-2" data-w="90"></div></div><span>9.0</span></td></tr>
-              <tr data-row="safety"><td><b>安全性</b></td><td><div class="bar-wrap"><div class="bar bar-1" data-w="65"></div></div><span>6.5</span></td><td><div class="bar-wrap"><div class="bar bar-2" data-w="85"></div></div><span>8.5</span></td></tr>
+            <tbody>
+              <tr id="row-易用性">
+                <td><b>易用性</b><br><small>Usability</small></td>
+                <td><div class="bar-wrap"><div class="bar bar-1" data-w="70"></div></div><span>7.0</span></td>
+                <td><div class="bar-wrap"><div class="bar bar-2" data-w="90"></div></div><span>9.0</span></td>
+              </tr>
+              <tr id="row-效率">
+                <td><b>效率</b><br><small>Efficiency</small></td>
+                <td><div class="bar-wrap"><div class="bar bar-1" data-w="80"></div></div><span>8.0</span></td>
+                <td><div class="bar-wrap"><div class="bar bar-2" data-w="80"></div></div><span>8.0</span></td>
+              </tr>
+              <tr id="row-學習性">
+                <td><b>學習性</b><br><small>Learnability</small></td>
+                <td><div class="bar-wrap"><div class="bar bar-1" data-w="70"></div></div><span>7.0</span></td>
+                <td><div class="bar-wrap"><div class="bar bar-2" data-w="90"></div></div><span>9.0</span></td>
+              </tr>
+              <tr id="row-記憶性">
+                <td><b>記憶性</b><br><small>Memorability</small></td>
+                <td><div class="bar-wrap"><div class="bar bar-1" data-w="65"></div></div><span>6.5</span></td>
+                <td><div class="bar-wrap"><div class="bar bar-2" data-w="80"></div></div><span>8.0</span></td>
+              </tr>
+              <tr id="row-滿意度">
+                <td><b>滿意度</b><br><small>Satisfaction</small></td>
+                <td><div class="bar-wrap"><div class="bar bar-1" data-w="80"></div></div><span>8.0</span></td>
+                <td><div class="bar-wrap"><div class="bar bar-2" data-w="85"></div></div><span>8.5</span></td>
+              </tr>
+              <tr id="row-功能性">
+                <td><b>功能性</b><br><small>Functionality</small></td>
+                <td><div class="bar-wrap"><div class="bar bar-1" data-w="75"></div></div><span>7.5</span></td>
+                <td><div class="bar-wrap"><div class="bar bar-2" data-w="90"></div></div><span>9.0</span></td>
+              </tr>
+              <tr id="row-安全性">
+                <td><b>安全性</b><br><small>Safety</small></td>
+                <td><div class="bar-wrap"><div class="bar bar-1" data-w="65"></div></div><span>6.5</span></td>
+                <td><div class="bar-wrap"><div class="bar bar-2" data-w="85"></div></div><span>8.5</span></td>
+              </tr>
             </tbody>
           </table>
         </div>
-      </div>
 
-      <h2 class="section-title text-center">深度<span class="c3">分項對比</span></h2>
+      </div><!-- /compare-vis-grid -->
 
-      <!-- 底段：佔滿寬度的詳細卡片 -->
-      <div class="bottom-section" id="detailSection"></div>
+      <!-- ③ 各項目詳細說明 -->
+      <div class="analysis-notes seven-criteria layout-default" style="margin-top:60px;">
 
-      <!-- 底部結論 -->
-      <div class="conclusion-box reveal">
-        <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 24px; text-align: center;">結論：哪一個適合您？</h3>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
-          <div>
-            <h4 style="color: var(--c1); font-weight: 800; margin-bottom: 12px;">適合選擇《知識王 LIVE》：</h4>
-            <ul style="color: var(--muted); font-size: 0.95rem; line-height: 1.7; list-style: disc; padding-left: 20px;">
-              <li>喜歡 RPG 成長系統與收集獎勵的玩家。</li>
-              <li>偏好與不認識的對手進行即時隨機 PK。</li>
-              <li>希望在遊戲中吸收各種生活與在地科普知識。</li>
-            </ul>
-          </div>
-          <div>
-            <h4 style="color: var(--c2); font-weight: 800; margin-bottom: 12px;">適合選擇《Kahoot!》：</h4>
-            <ul style="color: var(--muted); font-size: 0.95rem; line-height: 1.7; list-style: disc; padding-left: 20px;">
-              <li>教師、企業講師或活動主持人。</li>
-              <li>需要進行課後分析與學習數據追蹤。</li>
-              <li>追求極致簡便、免註冊即可快速加入的體驗。</li>
-            </ul>
+        <div class="note-card reveal" id="note-易用性">
+          <div class="note-header"><span class="criteria-icon">🖐️</span><div><h3>易用性</h3><small>操作是否直覺</small></div></div>
+          <div class="note-body">
+            <div class="note-game note-g1"><span class="game-chip chip-1">知識王 LIVE</span><p>需先下載 App 並綁定 Google 帳號才能進入遊戲，初次啟動流程較長。主介面功能選項較多，新玩家需要一段時間探索各模式入口，操作直覺度中等。</p></div>
+            <div class="note-game note-g2"><span class="game-chip chip-2">Kahoot!</span><p>參與者只需輸入 6 位 Game PIN 即可加入，無需帳號，介面以四色大按鈕呈現選項，即使從未使用過也能在 30 秒內上手，操作極為直覺。</p></div>
           </div>
         </div>
-      </div>
+
+        <div class="note-card reveal" id="note-效率">
+          <div class="note-header"><span class="criteria-icon">⚡</span><div><h3>效率</h3><small>操作是否流暢</small></div></div>
+          <div class="note-body">
+            <div class="note-game note-g1"><span class="game-chip chip-1">知識王 LIVE</span><p>即時配對系統快速找到對手，答題介面簡潔，反應靈敏。金幣、排名等資訊即時更新，操作流暢度高，但進入各模式前的選單層級稍多。</p></div>
+            <div class="note-game note-g2"><span class="game-chip chip-2">Kahoot!</span><p>主持端題目切換流暢，參與者端介面極簡，點擊後立即回應。但教師建立題組時步驟較多，大型班級在 PIN 輸入階段偶有等待延遲。</p></div>
+          </div>
+        </div>
+
+        <div class="note-card reveal" id="note-學習性">
+          <div class="note-header"><span class="criteria-icon">📖</span><div><h3>學習性</h3><small>是否容易上手</small></div></div>
+          <div class="note-body">
+            <div class="note-game note-g1"><span class="game-chip chip-1">知識王 LIVE</span><p>基本答題模式容易理解，但城市闖關、主持模式等進階功能需要閱讀說明。對於不熟悉手機遊戲的使用者，學習曲線相對較陡。</p></div>
+            <div class="note-game note-g2"><span class="game-chip chip-2">Kahoot!</span><p>參與者端幾乎零學習成本；主持人端也有完整引導流程，課堂教師通常 10 分鐘內即可建立並發布第一場遊戲，學習曲線非常平緩。</p></div>
+          </div>
+        </div>
+
+        <div class="note-card reveal" id="note-記憶性">
+          <div class="note-header"><span class="criteria-icon">🧠</span><div><h3>記憶性</h3><small>是否容易記住操作方式</small></div></div>
+          <div class="note-body">
+            <div class="note-game note-g1"><span class="game-chip chip-1">知識王 LIVE</span><p>多種遊戲模式的進入方式各有不同，長時間未使用後可能需要重新摸索。整體 UI 元素較多，操作路徑不如競品統一，記憶性偏低。</p></div>
+            <div class="note-game note-g2"><span class="game-chip chip-2">Kahoot!</span><p>四色方塊的答題介面極具辨識度，任何人見過一次即難以忘記。即使數月未用，重新進入時操作直覺依舊，核心流程高度一致且易記。</p></div>
+          </div>
+        </div>
+
+        <div class="note-card reveal" id="note-滿意度">
+          <div class="note-header"><span class="criteria-icon">😊</span><div><h3>滿意度</h3><small>是否具吸引力、好玩</small></div></div>
+          <div class="note-body">
+            <div class="note-game note-g1"><span class="game-chip chip-1">知識王 LIVE</span><p>豐富的題庫、金幣獎勵系統與競技排行榜帶來強烈的成就感與再玩動力。本土化內容貼近台灣玩家，題目趣味性高，玩家黏著度強。</p></div>
+            <div class="note-game note-g2"><span class="game-chip chip-2">Kahoot!</span><p>音效與配樂活潑、排行榜帶來即時競爭感、即使是輸家也能在下一題翻盤，課堂氛圍活絡。但長期個人使用的趣味性不如知識王的養成系統。</p></div>
+          </div>
+        </div>
+
+        <div class="note-card reveal" id="note-功能性">
+          <div class="note-header"><span class="criteria-icon">⚙️</span><div><h3>功能性</h3><small>遊戲功能是否完整</small></div></div>
+          <div class="note-body">
+            <div class="note-game note-g1"><span class="game-chip chip-1">知識王 LIVE</span><p>提供 1v1 對戰、城市闖關、好友邀請、主持模式，功能集中在競技益智場景。題庫涵蓋 6 大領域，但缺乏學習分析報告與作業指派功能。</p></div>
+            <div class="note-game note-g2"><span class="game-chip chip-2">Kahoot!</span><p>涵蓋 Classic、Team Mode、Assign 作業、AI 生成題目、學習分析報告等，功能橫跨課堂、企業、社群場景，整體功能廣度與深度均較高。</p></div>
+          </div>
+        </div>
+
+        <div class="note-card reveal" id="note-安全性">
+          <div class="note-header"><span class="criteria-icon">🔒</span><div><h3>安全性</h3><small>是否容易誤操作或出現不當內容</small></div></div>
+          <div class="note-body">
+            <div class="note-game note-g1"><span class="game-chip chip-1">知識王 LIVE</span><p>題庫為官方審核，內容安全，但課金介面對未成年玩家缺乏明確的保護機制。操作上偶有誤觸廣告或課金按鈕的風險，無 COPPA/GDPR 聲明。</p></div>
+            <div class="note-game note-g2"><span class="game-chip chip-2">Kahoot!</span><p>具備 COPPA 與 GDPR 合規認證，使用者生成內容經過審核機制過濾。學生端介面無廣告、無課金入口，誤操作風險低，適合學齡兒童安全使用。</p></div>
+          </div>
+        </div>
+
+      </div><!-- /seven-criteria -->
 
     </div>
   </section>
 
-  <script src="script.js"></script>
-  <script>
-    const comparisonDetails = {
-      usability: { title: '易用性', g1: '需先下載 App，初次啟動流程較長。主介面選項繁多，新玩家需幾分鐘適應。', g2: '極致精簡，輸入 PIN 碼即可進入，四色大按鈕讓小孩也能直覺操作。' },
-      efficiency: { title: '效率', g1: '強大即時配對系統，對戰節奏極快。每局結算瞬間完成。', g2: '網頁與行動端同步率極高，主持人切換題目後瞬間更新。' },
-      learnability: { title: '學習性', g1: '基本搶答模式一秒上手，但進階功能需閱讀說明。', g2: '幾乎零學習曲線。教師端引導完善，出題異常簡單。' },
-      memorability: { title: '記憶性', g1: '模式較多且介面深層，長久未遊玩需重新回憶功能位置。', g2: '核心操作永遠是那四種顏色，視覺記憶極強，不易遺忘。' },
-      satisfaction: { title: '滿意度', g1: '成就感來自成長與排名，對於熱衷競爭的玩家吸引力大。', g2: '現場氣氛營造神器。動感 BGM 能讓課堂氣氛瞬間沸騰。' },
-      functionality: { title: '功能性', g1: '專注益智競技，題庫豐富。但學習數據追蹤功能較薄弱。', g2: '橫跨教育與企業。具備詳盡報告，能精準分析知識盲點。' },
-      safety: { title: '安全性', g1: '官方審核題庫安全。但內購機制對兒童使用需適度監督。', g2: '符合國際資安標準。不需註冊即可參與，保護隱私。' }
-    };
+  <!-- 接下來可以看... -->
+  <section class="recirculation">
+    <div class="container">
+      <h2>接下來可以看…</h2>
+      <div class="recirc-cards">
+        <a href="zhishiwang.html" class="recirc-card">
+          <div class="recirc-icon">🎮</div>
+          <h3>《知識王 LIVE》深度解析</h3>
+          <p>台灣本土益智競技，全面深度介紹</p>
+        </a>
+        <a href="kahoot.html" class="recirc-card">
+          <div class="recirc-icon">🟪</div>
+          <h3>《Kahoot!》深度解析</h3>
+          <p>全球 3 億用戶的遊戲化學習平台</p>
+        </a>
+      </div>
+      <a href="index.html" class="btn-home">🏠 返回主頁</a>
+    </div>
+  </section>
 
-    function renderDetails() {
-      const container = document.getElementById('detailSection');
-      container.innerHTML = '';
-      Object.keys(comparisonDetails).forEach(key => {
-        const row = document.querySelector(`tr[data-row="${key}"]`);
-        if (row && row.style.display !== 'none') {
-          const item = comparisonDetails[key];
-          const card = document.createElement('div');
-          card.className = 'note-card reveal visible';
-          card.innerHTML = `<div class="note-header"><h3>${item.title}</h3></div><div class="note-body">
-            <div class="note-game note-g1"><span class="game-label label-g1">知識王 LIVE</span><p>${item.g1}</p></div>
-            <div class="note-game note-g2"><span class="game-label label-g2">Kahoot!</span><p>${item.g2}</p></div>
-          </div>`;
-          container.appendChild(card);
+  <footer>
+    <div class="container">
+      <p>使用者介面設計與評鑑 · 第三次作業</p>
+      <p class="footer-sub">分析對象：知識王 LIVE · Kahoot!</p>
+    </div>
+  </footer>
+
+  <button id="backTop" aria-label="返回頂部">↑</button>
+  <div id="toastContainer"></div>
+  <script src="common.js"></script>
+  <script>
+    'use strict';
+
+    // ── 資料 ─────────────────────────────────────
+    const CRITERIA = ['易用性', '效率', '學習性', '記憶性', '滿意度', '功能性', '安全性'];
+    const G1_DATA  = { '易用性': 7.0, '效率': 8.0, '學習性': 7.0, '記憶性': 6.5, '滿意度': 8.0, '功能性': 7.5, '安全性': 6.5 };
+    const G2_DATA  = { '易用性': 9.0, '效率': 8.0, '學習性': 9.0, '記憶性': 8.0, '滿意度': 8.5, '功能性': 9.0, '安全性': 8.5 };
+
+    // 目前勾選中的項目
+    const visible = new Set(CRITERIA);
+
+    // ── 雷達圖 ────────────────────────────────────
+    let radarChart = null;
+
+    function buildChartData() {
+      const labels = CRITERIA.filter(c => visible.has(c));
+      return {
+        labels,
+        datasets: [
+          {
+            label: '🧠 知識王 LIVE',
+            data: labels.map(c => G1_DATA[c]),
+            backgroundColor: 'rgba(33,150,243,0.18)',
+            borderColor: '#2196f3', borderWidth: 2,
+            pointBackgroundColor: '#2196f3', pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff', pointHoverBorderColor: '#2196f3', pointRadius: 5,
+          },
+          {
+            label: '🎯 Kahoot!',
+            data: labels.map(c => G2_DATA[c]),
+            backgroundColor: 'rgba(156,77,255,0.18)',
+            borderColor: '#9c4dff', borderWidth: 2,
+            pointBackgroundColor: '#9c4dff', pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff', pointHoverBorderColor: '#9c4dff', pointRadius: 5,
+          }
+        ]
+      };
+    }
+
+    function initChart() {
+      const ctx = document.getElementById('radarChart');
+      if (!ctx || typeof Chart === 'undefined') return;
+      radarChart = new Chart(ctx, {
+        type: 'radar',
+        data: buildChartData(),
+        options: {
+          responsive: true, maintainAspectRatio: true,
+          animation: { duration: 600, easing: 'easeInOutQuart' },
+          plugins: {
+            legend: {
+              labels: {
+                color: '#eeeeff',
+                font: { family: "'Noto Sans TC', sans-serif", size: 12, weight: '600' },
+                padding: 20, usePointStyle: true
+              }
+            },
+            tooltip: {
+              backgroundColor: 'rgba(13,13,38,0.92)', borderColor: 'rgba(255,255,255,0.12)', borderWidth: 1,
+              titleColor: '#eeeeff', bodyColor: '#aaaacc', padding: 12,
+              callbacks: { label: c => ` ${c.dataset.label.replace(/^[^\s]+ /, '')}：${c.raw} / 10` }
+            }
+          },
+          scales: {
+            r: {
+              min: 0, max: 10,
+              ticks: { stepSize: 2, color: '#55556a', backdropColor: 'transparent', font: { size: 10 } },
+              grid: { color: 'rgba(255,255,255,0.07)' },
+              angleLines: { color: 'rgba(255,255,255,0.07)' },
+              pointLabels: { color: '#aaaacc', font: { family: "'Noto Sans TC', sans-serif", size: 12, weight: '600' } }
+            }
+          }
         }
       });
     }
-
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const cb = btn.querySelector('input');
-        cb.checked = !cb.checked;
-        btn.classList.toggle('active', cb.checked);
-        const row = document.querySelector(`tr[data-row="${btn.dataset.row}"]`);
-        if(row) row.style.display = cb.checked ? '' : 'none';
-        renderDetails();
-        updateChart();
-      });
-    });
-
-    document.getElementById('selectAllBtn').addEventListener('click', () => {
-      filterBtns.forEach(btn => {
-        btn.classList.add('active');
-        btn.querySelector('input').checked = true;
-        document.querySelector(`tr[data-row="${btn.dataset.row}"]`).style.display = '';
-      });
-      renderDetails();
-      updateChart();
-    });
-
-    let myRadar;
-    window.onload = () => {
-      const ctx = document.getElementById('radarChartComp');
-      myRadar = new Chart(ctx, {
-        type: 'radar',
-        data: {
-          labels: ['易用性', '效率', '學習性', '記憶性', '滿意度', '功能性', '安全性'],
-          datasets: [
-            { label: '知識王 LIVE', data: [7,8,7,6.5,8,7.5,6.5], borderColor: '#2196f3', backgroundColor: 'rgba(33,150,243,0.1)', borderWidth: 3 },
-            { label: 'Kahoot!', data: [9,8,9,8,8.5,9,8.5], borderColor: '#9c4dff', backgroundColor: 'rgba(156,77,255,0.1)', borderWidth: 3 }
-          ]
-        },
-        options: {
-          responsive: true, maintainAspectRatio: false,
-          scales: { r: { min: 0, max: 10, ticks: { display: false }, grid: { color: 'rgba(255,255,255,0.05)' }, angleLines: { color: 'rgba(255,255,255,0.05)' } } },
-          plugins: { legend: { position: 'bottom' } }
-        }
-      });
-      renderDetails();
-    };
 
     function updateChart() {
-      const activeKeys = Array.from(filterBtns).filter(b => b.classList.contains('active')).map(b => b.dataset.row);
-      const indices = activeKeys.map(k => Object.keys(comparisonDetails).indexOf(k));
-      myRadar.data.labels = activeKeys.map(k => comparisonDetails[k].title);
-      myRadar.data.datasets[0].data = indices.map(i => [7,8,7,6.5,8,7.5,6.5][i]);
-      myRadar.data.datasets[1].data = indices.map(i => [9,8,9,8,8.5,9,8.5][i]);
-      myRadar.update();
+      if (!radarChart) return;
+      const d = buildChartData();
+      radarChart.data.labels   = d.labels;
+      radarChart.data.datasets[0].data = d.datasets[0].data;
+      radarChart.data.datasets[1].data = d.datasets[1].data;
+      radarChart.update();
     }
+
+    // 滾到圖表才初始化
+    const chartEl = document.getElementById('radarChart');
+    if (chartEl) {
+      const obs = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) { initChart(); obs.disconnect(); }
+      }, { threshold: 0.2 });
+      obs.observe(chartEl);
+    }
+
+    // ── 篩選器 ────────────────────────────────────
+    const filterBtns = document.querySelectorAll('.filter-btn-h');
+
+    function applyFilter(name, on) {
+      if (on) {
+        visible.add(name);
+      } else {
+        visible.delete(name);
+      }
+      // 表格行
+      const row = document.getElementById('row-' + name);
+      if (row) row.classList.toggle('hidden-row', !on);
+      // 詳細說明卡片
+      const note = document.getElementById('note-' + name);
+      if (note) note.classList.toggle('hidden-row', !on);
+      // 雷達圖
+      updateChart();
+    }
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const name   = btn.dataset.name;
+        const wasOn  = btn.classList.contains('active');
+        btn.classList.toggle('active', !wasOn);
+        btn.textContent = (!wasOn ? '✓ ' : '✗ ') + name;
+        applyFilter(name, !wasOn);
+      });
+    });
+
+    document.getElementById('btnSelectAll').addEventListener('click', () => {
+      filterBtns.forEach(btn => {
+        const name = btn.dataset.name;
+        btn.classList.add('active');
+        btn.textContent = '✓ ' + name;
+        applyFilter(name, true);
+      });
+    });
+
+    // ── 兩欄比較選擇器（Dropdown Selector + Undo）────
+    const segCtrlA  = document.querySelector('.seg-ctrl[data-panel="a"]');
+    const segCtrlB  = document.querySelector('.seg-ctrl[data-panel="b"]');
+    const scoreRows = document.querySelectorAll('.score-table tbody tr');
+    const undoBtn   = document.getElementById('undoPanel');
+
+    const rowData = [];
+    scoreRows.forEach(row => {
+      rowData.push({ g1: row.cells[1].innerHTML, g2: row.cells[2].innerHTML });
+    });
+
+    function getPanelVal(ctrl) {
+      return ctrl.querySelector('.seg-btn.active').dataset.val;
+    }
+
+    function applyPanels(updateTable) {
+      const a = getPanelVal(segCtrlA);
+      const b = getPanelVal(segCtrlB);
+      if (updateTable) {
+        scoreRows.forEach((row, i) => {
+          row.cells[1].innerHTML = rowData[i][a];
+          row.cells[2].innerHTML = rowData[i][b];
+          row.cells[1].querySelectorAll('.bar[data-w]').forEach(bar => { bar.style.width = bar.dataset.w + '%'; });
+          row.cells[2].querySelectorAll('.bar[data-w]').forEach(bar => { bar.style.width = bar.dataset.w + '%'; });
+        });
+      }
+      const sc = document.querySelector('.seven-criteria');
+      sc.classList.remove('layout-default', 'layout-swap', 'layout-g1-only', 'layout-g2-only');
+      if      (a === 'g1' && b === 'g2') sc.classList.add('layout-default');
+      else if (a === 'g2' && b === 'g1') sc.classList.add('layout-swap');
+      else if (a === 'g1' && b === 'g1') sc.classList.add('layout-g1-only');
+      else                                sc.classList.add('layout-g2-only');
+    }
+
+    const panelHistory = [{ a: 'g1', b: 'g2' }];
+
+    [segCtrlA, segCtrlB].forEach(ctrl => {
+      ctrl.querySelectorAll('.seg-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          ctrl.querySelectorAll('.seg-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          panelHistory.push({ a: getPanelVal(segCtrlA), b: getPanelVal(segCtrlB) });
+          undoBtn.disabled = false;
+          applyPanels(true);
+        });
+      });
+    });
+
+    function undoPanels() {
+      if (panelHistory.length <= 1) return;
+      panelHistory.pop();
+      const prev = panelHistory[panelHistory.length - 1];
+      segCtrlA.querySelectorAll('.seg-btn').forEach(b => b.classList.toggle('active', b.dataset.val === prev.a));
+      segCtrlB.querySelectorAll('.seg-btn').forEach(b => b.classList.toggle('active', b.dataset.val === prev.b));
+      undoBtn.disabled = panelHistory.length <= 1;
+      applyPanels(true);
+      showToast('↩ 已退回上一步');
+    }
+
+    undoBtn.addEventListener('click', undoPanels);
+    document.addEventListener('keydown', e => {
+      const inInput = e.target.matches('input, textarea, select');
+      if ((e.ctrlKey || e.metaKey) && e.code === 'KeyZ' && !inInput) { e.preventDefault(); undoPanels(); }
+    });
+
+    applyPanels(false);
+
+    // 分數條動畫
+    const barObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('.bar[data-w]').forEach(bar => {
+            setTimeout(() => { bar.style.width = bar.dataset.w + '%'; }, 200);
+          });
+          barObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.score-table-wrap').forEach(el => barObserver.observe(el));
   </script>
 </body>
 </html>
