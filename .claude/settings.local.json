@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(node take-modal-verify.js)"
+      "Bash(node take-modal-verify.js)",
+      "WebSearch"
     ]
   }
 }

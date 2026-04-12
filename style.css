@@ -14,6 +14,7 @@
   --c2:        #9c4dff;   /* Kahoot 紫 */
   --c2-glow:   rgba(156,77,255,0.25);
   --c3:        #00d4c8;   /* 青綠 accent */
+  --c4:        #ff9800;   /* 橘色 accent */
 
   --text:      #eeeeff;
   --muted:     #8888aa;
@@ -155,7 +156,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .s1 { width: 520px; height: 520px; background: var(--c1); top: -120px; left: -100px; animation-duration: 14s; }
 .s2 { width: 400px; height: 400px; background: var(--c2); bottom: -80px; right: -60px; animation-duration: 18s; animation-delay: -6s; }
 .s3 { width: 280px; height: 280px; background: var(--c3); top: 40%; left: 50%; animation-duration: 10s; animation-delay: -3s; opacity: 0.2; }
-.s4 { width: 200px; height: 200px; background: #ff6b6b; bottom: 20%; left: 10%; animation-duration: 16s; animation-delay: -8s; opacity: 0.15; }
+.s4 { width: 200px; height: 200px; background: var(--c4); bottom: 20%; left: 10%; animation-duration: 16s; animation-delay: -8s; opacity: 0.15; }
 
 @keyframes drift {
   from { transform: translate(0, 0) scale(1); }
@@ -300,6 +301,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .c1 { color: var(--c1); }
 .c2 { color: var(--c2); }
 .c3 { color: var(--c3); }
+.c4 { color: var(--c4); }
 .c1-bg { background: var(--c1) !important; }
 .c2-bg { background: var(--c2) !important; }
 
@@ -1033,35 +1035,85 @@ footer p { font-size: .88rem; color: var(--muted); }
    淺色主題
 ═══════════════════════════════════════════ */
 html.light {
-  --bg:        #f0f0f8;
+  --bg:        #f2f2f9;
   --bg2:       #ffffff;
-  --bg-card:   rgba(0,0,0,0.04);
-  --bg-hover:  rgba(0,0,0,0.07);
-  --border:    rgba(0,0,0,0.1);
-  --border-hi: rgba(0,0,0,0.22);
-  --text:      #1a1a30;
-  --muted:     #55557a;
-  --subtle:    #9999b0;
+  --bg-card:   #ffffff;
+  --bg-hover:  rgba(0,0,0,0.06);
+  --border:    rgba(0,0,0,0.13);
+  --border-hi: rgba(0,0,0,0.28);
+  --text:      #12122a;
+  --muted:     #46466e;
+  --subtle:    #8888aa;
 }
 html.light body { background: var(--bg); color: var(--text); }
-html.light #navbar { background: rgba(240,240,248,0.92); border-bottom-color: rgba(0,0,0,0.1); }
+html.light #navbar { background: rgba(242,242,249,0.94); border-bottom-color: rgba(0,0,0,0.12); }
 html.light .nav-links a { color: var(--muted); }
-html.light #hero { background: linear-gradient(160deg, #e8e8f8 0%, #f4f0ff 100%); }
-html.light .hero-shapes .shape { opacity: 0.12; }
+html.light #hero { background: linear-gradient(160deg, #e4e4f5 0%, #ede8ff 100%); }
+html.light .hero-shapes .shape { opacity: 0.14; }
 html.light .hero-title {
-  background: linear-gradient(135deg, #1a1a30 20%, var(--c1) 60%, var(--c2));
+  background: linear-gradient(135deg, #12122a 20%, var(--c1) 60%, var(--c2));
   -webkit-background-clip: text;
   background-clip: text;
 }
-html.light .hero-eyebrow, html.light .hero-sub { color: #55557a; }
-html.light .score-table thead th { background: var(--bg2); }
+html.light .hero-eyebrow, html.light .hero-sub { color: #46466e; }
+
+/* 卡片在淺色模式下加上陰影以建立立體感 */
+html.light .portal-card,
+html.light .note-card,
+html.light .shortcut-card,
+html.light .recirc-card {
+  background: #ffffff;
+  border-color: rgba(0,0,0,0.13);
+  box-shadow: 0 2px 14px rgba(0,0,0,0.08);
+}
+
+/* Section label 加強可見度 */
+html.light .section-label {
+  background: rgba(0,0,0,0.06);
+  border-color: rgba(0,0,0,0.18);
+  color: #34345a;
+}
+
+/* 快捷鍵標籤：c3 青綠在白底對比不足，改為深色 */
+html.light .shortcut-key {
+  color: #007a72;
+  background: rgba(0,150,136,0.1);
+  border-color: rgba(0,150,136,0.3);
+}
+
+/* c3/c4 文字在淺色模式下加深 */
+html.light .c3 { color: #007a72; }
+html.light .c4 { color: #c95e00; }
+
+/* Badge 在白底需要更深的顏色才看得清楚 */
+html.light .badge-pos  { background: rgba(0,150,136,0.1);  color: #007a72; border-color: rgba(0,150,136,0.35); }
+html.light .badge-mid  { background: rgba(200,110,0,0.1);  color: #9f5800; border-color: rgba(200,110,0,0.3); }
+html.light .badge-neg  { background: rgba(210,30,30,0.08); color: #c02020; border-color: rgba(210,30,30,0.28); }
+html.light .badge-info { background: rgba(70,50,200,0.08); color: #4434b8; border-color: rgba(70,50,200,0.25); }
+
+/* Feature compare table */
+html.light .fct-table  { border-color: rgba(0,0,0,0.15); }
+html.light .fct-header { background: #f0f0fa; border-bottom-color: rgba(0,0,0,0.2); }
+html.light .fct-header .fct-col-g1 { color: #1256a8; }
+html.light .fct-header .fct-col-g2 { color: #5c1fa0; }
+html.light .fct-row    { border-bottom-color: rgba(0,0,0,0.08); }
+html.light .fct-row:hover { background: rgba(0,0,0,0.04); }
+
+/* Score table */
+html.light .score-table thead th { background: #f0f0fa; }
 html.light .score-table tbody tr:hover td { background: rgba(0,0,0,0.03); }
+
+/* Note cards 左側色條在淺色模式更明顯 */
+html.light .note-g1 { background: rgba(33,150,243,0.07); }
+html.light .note-g2 { background: rgba(156,77,255,0.07); }
+
+/* Modal / overlay */
 html.light .modal-box { background: var(--bg2); }
 html.light .modal-overlay { background: rgba(0,0,0,0.5); }
-html.light .seg-ctrl { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.12); }
-html.light .font-ctrl { background: rgba(0,0,0,0.04); border-color: rgba(0,0,0,0.12); }
+html.light .seg-ctrl { background: rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.14); }
+html.light .font-ctrl { background: rgba(0,0,0,0.05); border-color: rgba(0,0,0,0.14); }
 @media (max-width: 760px) {
-  html.light .nav-links { background: rgba(240,240,248,0.97); border-bottom-color: rgba(0,0,0,0.1); }
+  html.light .nav-links { background: rgba(242,242,249,0.98); border-bottom-color: rgba(0,0,0,0.12); }
 }
 
 /* ═══════════════════════════════════════════
@@ -1358,6 +1410,7 @@ html.light .page-hero { background: linear-gradient(160deg, #f0f0fa 0%, #f8f4ff 
 .portal-card.card-1:hover { border-color: var(--c1); box-shadow: 0 20px 56px var(--c1-glow); }
 .portal-card.card-2:hover { border-color: var(--c2); box-shadow: 0 20px 56px var(--c2-glow); }
 .portal-card.card-3:hover { border-color: var(--c3); box-shadow: 0 20px 56px rgba(0,212,200,0.2); }
+.portal-card.card-4:hover { border-color: var(--c4); box-shadow: 0 20px 56px rgba(255,152,0,0.2); }
 .portal-card .card-icon { font-size: 3rem; line-height: 1; }
 .portal-card h3 { font-size: 1.15rem; font-weight: 700; line-height: 1.45; }
 .portal-card p { font-size: .85rem; color: var(--muted); line-height: 1.6; }
@@ -1479,6 +1532,103 @@ details.accordion-item[open] .accordion-arrow { transform: rotate(180deg); }
 .accordion-body .info-grid,
 .accordion-body .steps-list,
 .accordion-body .modes-grid { margin-top: 20px; }
+
+/* ═══════════════════════════════════════════
+   Feature Comparison Table (12 Items)
+═══════════════════════════════════════════ */
+.fct-table {
+  margin-top: 48px;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+
+.fct-header,
+.fct-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+}
+
+.fct-header {
+  background: var(--bg-card);
+  border-bottom: 2px solid var(--border-hi);
+  padding: 16px 20px;
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.fct-header .fct-col-g1 { color: var(--c1); }
+.fct-header .fct-col-g2 { color: var(--c2); }
+
+.fct-row {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border);
+  transition: background var(--t);
+}
+.fct-row:last-child { border-bottom: none; }
+.fct-row:hover { background: var(--bg-hover); }
+
+.fct-col-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: .9rem;
+  font-weight: 600;
+}
+
+.fct-num {
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--muted);
+  min-width: 22px;
+  opacity: .6;
+}
+
+.fct-col-g1,
+.fct-col-g2 {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fct-col-g1 small,
+.fct-col-g2 small {
+  font-size: .75rem;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.fct-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  width: fit-content;
+}
+
+/* Badge 配色說明：
+   badge-pos（青綠 c3）：正面特性。與 badge-neg（紅）配對無色盲問題（非紅+綠）。
+   badge-mid（琥珀）：中性特性。明亮小元素符合 Bright colours for small size 原則。
+   badge-neg（紅）：負面特性。以 ✓/✗ 符號作為非色彩識別的輔助，符合無障礙原則。
+   badge-info（薰衣草紫）：描述型資訊，與 badge-pos 青綠明確區隔，避免混淆。 */
+.badge-pos  { background: rgba(0,212,200,0.13);    color: #00d4c8; border: 1px solid rgba(0,212,200,0.32); }
+.badge-mid  { background: rgba(255,179,71,0.15);   color: #ffb347; border: 1px solid rgba(255,179,71,0.3); }
+.badge-neg  { background: rgba(255,91,91,0.12);    color: #ff5b5b; border: 1px solid rgba(255,91,91,0.25); }
+.badge-info { background: rgba(170,160,255,0.13);  color: #b0a8ff; border: 1px solid rgba(170,160,255,0.3); }
+
+@media (max-width: 600px) {
+  .fct-header,
+  .fct-row { grid-template-columns: 1fr; gap: 8px; }
+  .fct-header .fct-col-g1,
+  .fct-header .fct-col-g2 { font-size: .75rem; }
+  .fct-col-label { margin-bottom: 4px; }
+}
 
 /* ═══════════════════════════════════════════
    Recirculation（接下來可以看...）
