@@ -1876,3 +1876,38 @@ details.accordion-item[open] .accordion-arrow { transform: rotate(180deg); }
     min-width: 0;
   }
 }
+
+/* ═══════════════════════════════════════════
+   比較頁區段導覽
+═══════════════════════════════════════════ */
+.compare-subnav {
+  position: sticky;
+  top: 56px; /* 跟在主 navbar 下方 */
+  z-index: 90;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(242,242,249,0.95);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  backdrop-filter: blur(8px);
+}
+.compare-subnav-tab {
+  padding: 6px 20px;
+  border-radius: 999px;
+  font-size: .875rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: all .2s ease;
+}
+.compare-subnav-tab:hover {
+  background: rgba(0,0,0,0.06);
+  color: var(--text);
+}
+.compare-subnav-tab.active {
+  background: var(--c3);
+  color: #fff;
+  border-color: var(--c3);
+}

@@ -46,27 +46,14 @@ const revealObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-// ── 主題切換 ─────────────────────────────
-const themeToggle = document.getElementById('themeToggle');
-(function initTheme() {
-  if (localStorage.getItem('theme') === 'light') {
-    document.documentElement.classList.add('light');
-    if (themeToggle) themeToggle.textContent = '☀️';
-  }
-})();
-
-function toggleTheme() {
-  const isLight = document.documentElement.classList.toggle('light');
-  if (themeToggle) themeToggle.textContent = isLight ? '☀️' : '🌙';
-  localStorage.setItem('theme', isLight ? 'light' : 'dark');
-}
-if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+// ── 固定淺色模式 ───────────────────────────
+document.documentElement.classList.add('light');
 
 // ── 字體大小 ──────────────────────────────
 const FONT_LEVELS = [85, 92, 100, 108, 116];
 let fontLevelIdx = 2;
 
-function applyFontSize(idx) {
+function applyFontSize(idx, silent = false) {
   fontLevelIdx = Math.max(0, Math.min(FONT_LEVELS.length - 1, idx));
   document.documentElement.style.fontSize = FONT_LEVELS[fontLevelIdx] + '%';
   localStorage.setItem('fontLevel', fontLevelIdx);
@@ -74,11 +61,12 @@ function applyFontSize(idx) {
   const inc = document.getElementById('fontIncrease');
   if (dec) dec.disabled = fontLevelIdx <= 0;
   if (inc) inc.disabled = fontLevelIdx >= FONT_LEVELS.length - 1;
+  if (!silent) showToast('字體大小：' + FONT_LEVELS[fontLevelIdx] + '%');
 }
 
 (function initFontSize() {
   const saved = parseInt(localStorage.getItem('fontLevel'));
-  applyFontSize(isNaN(saved) ? 2 : saved);
+  applyFontSize(isNaN(saved) ? 2 : saved, true);
 })();
 
 document.getElementById('fontDecrease')?.addEventListener('click', () => applyFontSize(fontLevelIdx - 1));
@@ -88,7 +76,6 @@ document.getElementById('fontIncrease')?.addEventListener('click', () => applyFo
 // ── 鍵盤快捷鍵 ───────────────────────────
 document.addEventListener('keydown', e => {
   const inInput = e.target.matches('input, textarea, select');
-  if (e.shiftKey && e.code === 'KeyD' && !inInput) { e.preventDefault(); toggleTheme(); }
   if (e.shiftKey && (e.code === 'Equal' || e.code === 'NumpadAdd') && !inInput) { e.preventDefault(); applyFontSize(fontLevelIdx + 1); }
   if (e.shiftKey && (e.code === 'Minus' || e.code === 'NumpadSubtract') && !inInput) { e.preventDefault(); applyFontSize(fontLevelIdx - 1); }
   if (e.shiftKey && e.code === 'Digit0' && !inInput) { e.preventDefault(); applyFontSize(2); }

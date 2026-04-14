@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-TW" class="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,7 +21,6 @@
         <button id="fontReset"    title="重設字體 (Shift+0)" aria-label="重設字體">A</button>
         <button id="fontIncrease" title="放大字體 (Shift++)" aria-label="放大字體">A+</button>
       </div>
-      <button id="themeToggle" title="切換主題 (Shift+D)" aria-label="切換主題">🌙</button>
     </div>
   </nav>
 
@@ -35,7 +34,13 @@
     </div>
   </section>
 
-  <section class="section">
+  <!-- 區段導覽 -->
+  <nav class="compare-subnav">
+    <a class="compare-subnav-tab active" href="#compare-usability">⚖️ 綜合比較</a>
+    <a class="compare-subnav-tab" href="#compare-features">🎮 遊戲特性比較</a>
+  </nav>
+
+  <section id="compare-usability" class="section">
     <div class="container">
 
       <!-- ① 篩選列（置頂） -->
@@ -193,7 +198,7 @@
   </section>
 
   <!-- ── 12 項遊戲特性比較 ── -->
-  <section class="section alt-bg">
+  <section id="compare-features" class="section alt-bg">
     <div class="container">
       <div class="section-label">特性</div>
       <h2 class="section-title">遊戲特性<span class="c3">比較</span></h2>
@@ -509,6 +514,23 @@
     });
 
     applyPanels(false);
+
+    // ── 區段導覽 active 狀態 ──────────────────
+    const subnavTabs = document.querySelectorAll('.compare-subnav-tab');
+    const subnavSections = [
+      document.getElementById('compare-usability'),
+      document.getElementById('compare-features'),
+    ];
+    function updateSubnav() {
+      const midY = window.scrollY + window.innerHeight / 2;
+      let active = 0;
+      subnavSections.forEach((sec, i) => {
+        if (sec && sec.offsetTop <= midY) active = i;
+      });
+      subnavTabs.forEach((tab, i) => tab.classList.toggle('active', i === active));
+    }
+    window.addEventListener('scroll', updateSubnav, { passive: true });
+    updateSubnav();
 
     // 分數條動畫
     const barObserver = new IntersectionObserver(entries => {
